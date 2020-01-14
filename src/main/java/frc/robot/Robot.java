@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.LimelightTest1;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.driveMecanum;
 import frc.robot.subsystems.DriveTrain;
@@ -30,8 +31,9 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
 
   // Command tankDrive = new TankDrive(); 
-  Command tankDrive = new TankDrive();
+  public Command tankDrive = new TankDrive();
   Command driveMecanum = new driveMecanum();
+  Command limelightTest1 = new LimelightTest1();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    driveMecanum.cancel();
+    tankDrive.cancel();
   }
 
   @Override
@@ -118,7 +120,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    driveMecanum.start();
+    tankDrive.start();
   }
 
   /**
@@ -127,6 +129,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    if (Robot.oi.driver.getAButton())
+      limelightTest1.start();
+    else 
+      limelightTest1.cancel();
+
+
   }
 
   /**
