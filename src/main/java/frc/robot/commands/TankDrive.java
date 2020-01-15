@@ -36,10 +36,12 @@ public class TankDrive extends Command {
       if (driverAxis2 > varSpeed) {
         driverAxis2 = varSpeed;
         Robot.driveTrain.setLeftMotorSpeed(0, -driverAxis2);
+        Robot.driveTrain.setRightMotorSpeed(0, driverAxis2);
         System.out.println("turning right");
       } else if (driverAxis2 < -varSpeed) {
         driverAxis2 = -varSpeed;
         Robot.driveTrain.setRightMotorSpeed(0, driverAxis2);
+        Robot.driveTrain.setLeftMotorSpeed(0, -driverAxis2);
         System.out.println("turning left");
       }
       if (driverAxis > varSpeed) {

@@ -15,6 +15,15 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+// import com.kauailabs.navx.frc.AHRS;
+
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.PIDController;
+// import edu.wpi.first.wpilibj.PIDOutput;
+// import edu.wpi.first.wpilibj.SPI;
+// import edu.wpi.first.wpilibj.Joystick;
+// import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class LimelightTest1 extends Command {
   private NetworkTable table;
@@ -46,34 +55,26 @@ public class LimelightTest1 extends Command {
 
     System.out.println("x " + x + " Y " + y + " area " + area);
 
-    double kSpeed = -0.3;
-    double turnDeadzone = 3;
+    double Kp = -0.04;
+    double min_command = .07;
 
-    double average = (double) (x + y) / 2;
-
-    if (average > turnDeadzone) {
-      Robot.driveTrain.FLMset(kSpeed);
-      Robot.driveTrain.BLMset(kSpeed);
-    } else {
-      Robot.driveTrain.FLMset(0);
-      Robot.driveTrain.BLMset(0);
+    double heading_error = -x;
+    double steering_adjust = 0.0;
+    
+    if (x > 1.0){
+      steering_adjust = Kp * heading_error - min_command;
+    }
+    else if (x < 1.0){
+      steering_adjust = Kp * heading_error + min_command;
     }
 
-    if (average < -1 * turnDeadzone) {
-      Robot.driveTrain.FRMset(kSpeed);
-      Robot.driveTrain.BRMset(kSpeed);
-    }
+    Robot.driveTrain.FRMset(steering_adjust);
+    Robot.driveTrain.BRMset(steering_adjust);
+    Robot.driveTrain.FLMset(-steering_adjust);
+    Robot.driveTrain.BLMset(-steering_adjust);
+    //todo make more better and add face detection 
 
-    else {
-      Robot.driveTrain.FRMset(0);
-      Robot.driveTrain.BRMset(0);
-    }
 
-    SmartDashboard.putNumber("limelight X", x);
-    SmartDashboard.putNumber("limelight Y", y);
-    SmartDashboard.putNumber("limelight area", area);
-
- 
   }
 
   // Make this return true when this Command no longer needs to run execute()
