@@ -7,12 +7,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LimelightTest1;
+import frc.robot.commands.LimelightTest2;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.driveMecanum;
 import frc.robot.subsystems.DriveTrain;
@@ -30,12 +34,18 @@ public class Robot extends TimedRobot {
 
   public static DriveTrain driveTrain = new DriveTrain();
 
-  // Command tankDrive = new TankDrive(); 
   public Command tankDrive = new TankDrive();
   Command driveMecanum = new driveMecanum();
   Command limelightTest1 = new LimelightTest1();
+  Command limelightTest2 = new LimelightTest2();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+  public static final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public static final NetworkTableEntry tx = table.getEntry("tx");
+  public static final NetworkTableEntry ty = table.getEntry("ty");
+  public static final NetworkTableEntry ta = table.getEntry("ta");
 
   /**
    * This function is run when the robot is first started up and should be
@@ -46,6 +56,8 @@ public class Robot extends TimedRobot {
     oi = new OI();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+
+
   }
 
   /**
@@ -134,6 +146,11 @@ public class Robot extends TimedRobot {
       limelightTest1.start();
     else 
       limelightTest1.cancel();
+
+    if (Robot.oi.driver.getYButton())
+      limelightTest2.start();
+    else
+      limelightTest2.cancel();
 
 
   }

@@ -26,10 +26,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class LimelightTest1 extends Command {
-  private NetworkTable table;
-  private NetworkTableEntry tx;
-  private NetworkTableEntry ty;
-  private NetworkTableEntry ta;
   public LimelightTest1() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -38,10 +34,6 @@ public class LimelightTest1 extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    ta = table.getEntry("ta");
 
   }
 
@@ -49,14 +41,14 @@ public class LimelightTest1 extends Command {
   @Override
   protected void execute() {
 
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    double x = Robot.tx.getDouble(0.0);
+    double y = Robot.ty.getDouble(0.0);
+    double area = Robot.ta.getDouble(0.0);
 
     System.out.println("x " + x + " Y " + y + " area " + area);
 
     double Kp = -0.04;
-    double min_command = .07;
+    double min_command = .06;
 
     double heading_error = -x;
     double steering_adjust = 0.0;
@@ -72,7 +64,7 @@ public class LimelightTest1 extends Command {
     Robot.driveTrain.BRMset(steering_adjust);
     Robot.driveTrain.FLMset(-steering_adjust);
     Robot.driveTrain.BLMset(-steering_adjust);
-    //todo make more better and add face detection 
+  //todo make more better and add face detection 
 
 
   }
