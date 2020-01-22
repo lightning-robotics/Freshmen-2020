@@ -43,9 +43,8 @@ public class LimelightTest1 extends Command {
 
     double x = Robot.tx.getDouble(0.0);
     double y = Robot.ty.getDouble(0.0);
-    double area = Robot.ta.getDouble(0.0);
 
-    System.out.println("x " + x + " Y " + y + " area " + area);
+    System.out.println("x " + x + " Y " + y);
 
     double Kp = -0.04;
     double min_command = .06;
@@ -55,10 +54,12 @@ public class LimelightTest1 extends Command {
     
     if (x > 1.0){
       steering_adjust = Kp * heading_error - min_command;
+      
     }
-    else if (x < 1.0){
+    else if (x < -1.0){
       steering_adjust = Kp * heading_error + min_command;
     }
+    
 
     Robot.driveTrain.FRMset(steering_adjust);
     Robot.driveTrain.BRMset(steering_adjust);

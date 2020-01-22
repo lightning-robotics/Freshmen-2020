@@ -17,7 +17,7 @@ public class LimelightTest2 extends Command {
   private double pheta = 24.3;
   private double currentDistance;
 
-  private double kPDistance = -0.01;
+  private double kPDistance = -0.02;
   private double targetDistance = 50;
 
   public LimelightTest2() {
@@ -49,8 +49,8 @@ public class LimelightTest2 extends Command {
     System.out.println("the current adjust is " + driving_adjust);
     Robot.driveTrain.FRMset(-driving_adjust);
     Robot.driveTrain.BRMset(-driving_adjust);
-    Robot.driveTrain.FLMset(driving_adjust);
-    Robot.driveTrain.BLMset(driving_adjust);
+    Robot.driveTrain.FLMset(-driving_adjust);
+    Robot.driveTrain.BLMset(-driving_adjust);
 
 
     
