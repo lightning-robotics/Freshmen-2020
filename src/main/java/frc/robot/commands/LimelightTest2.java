@@ -17,8 +17,11 @@ public class LimelightTest2 extends Command {
   private double pheta = 24.3;
   private double currentDistance;
 
-  private double kPDistance = -0.02;
+  private double kPDistance = -.5;
   private double targetDistance = 50;
+  private double kIDistance = -.01;
+  private double errorSum = 0;
+  private double maxSpeed = .4;
 
   public LimelightTest2() {
     // Use requires() here to declare subsystem dependencies
@@ -40,19 +43,27 @@ public class LimelightTest2 extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    
+  protected void execute() {    
     currentDistance = getDistanceFrom();
     double distanceError = targetDistance - currentDistance;
-    double driving_adjust = distanceError * kPDistance;
+    if (Math.abs(distanceError) <= 5) distanceError = 0;
+
+    errorSum += distanceError * .02;
+
+    double driving_adjust = distanceError * kPDistance + errorSum * kIDistance;
+    
+    driving_adjust = driving_adjust > maxSpeed ? maxSpeed : driving_adjust;
+
+    System.out.println("The current error is " + distanceError);
     System.out.println("The distance is " + currentDistance);
     System.out.println("the current adjust is " + driving_adjust);
-    Robot.driveTrain.FRMset(-driving_adjust);
-    Robot.driveTrain.BRMset(-driving_adjust);
-    Robot.driveTrain.FLMset(-driving_adjust);
-    Robot.driveTrain.BLMset(-driving_adjust);
 
-
+    if (distanceError != 0) {
+      Robot.driveTrain.FRMset(-driving_adjust);
+      Robot.driveTrain.BRMset(-driving_adjust);
+      Robot.driveTrain.FLMset(-driving_adjust);
+      Robot.driveTrain.BLMset(-driving_adjust);
+    }
     
   }
 

@@ -47,7 +47,7 @@ public class LimelightTest1 extends Command {
     System.out.println("x " + x + " Y " + y);
 
     double Kp = -0.04;
-    double min_command = .06;
+    double min_command = .08;
 
     double heading_error = -x;
     double steering_adjust = 0.0;
@@ -60,7 +60,6 @@ public class LimelightTest1 extends Command {
       steering_adjust = Kp * heading_error + min_command;
     }
     
-
     Robot.driveTrain.FRMset(steering_adjust);
     Robot.driveTrain.BRMset(steering_adjust);
     Robot.driveTrain.FLMset(-steering_adjust);
