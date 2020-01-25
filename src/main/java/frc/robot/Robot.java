@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -132,6 +134,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.FRONT_LEFT_MOTOR);
+    DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.FRONT_RIGHT_MOTOR);
+    
     tankDrive.start();
   }
 
@@ -142,6 +147,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     
+    // // Robot.driveTrain.BLMset(-.5);
+    // Robot.driveTrain.FLMset(.5);
+
     if (Robot.oi.driver.getAButton())
       limelightTest1.start();
     else 

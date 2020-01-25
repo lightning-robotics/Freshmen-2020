@@ -23,10 +23,10 @@ public class DriveTrain extends Subsystem {
 
 
   // Declartion of driver motors (hi)
-  private TalonSRX frontRightMotor = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
-  private TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
-  private TalonSRX frontLeftMotor = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
-  private TalonSRX backLeftMotor = new TalonSRX(RobotMap.BACK_LEFT_MOTOR);
+  public static final TalonSRX frontRightMotor = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
+  public static final TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
+  public static final TalonSRX frontLeftMotor = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
+  public static final TalonSRX backLeftMotor = new TalonSRX(RobotMap.BACK_LEFT_MOTOR);
   // public SpeedController frontRightMotor = new PWMTalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
   // public SpeedController backRightMotor = new PWMTalonSRX(RobotMap.BACK_RIGHT_MOTOR);
   // public SpeedController frontLeftMotor = new PWMTalonSRX(RobotMap.FRONT_LEFT_MOTOR);
@@ -42,6 +42,18 @@ public class DriveTrain extends Subsystem {
 //switch later
     backLeftMotor.setInverted(true);
     frontLeftMotor.setInverted(true);
+
+    frontLeftMotor.configNominalOutputForward(0);
+    frontLeftMotor.configNominalOutputReverse(0);
+    frontRightMotor.configNominalOutputForward(0);
+    frontRightMotor.configNominalOutputReverse(0);
+
+    frontLeftMotor.configPeakOutputForward(1);
+    frontLeftMotor.configPeakOutputReverse(-1);
+
+    
+    frontRightMotor.configPeakOutputForward(1);
+    frontRightMotor.configPeakOutputReverse(-1);
   }
 
   public void setRightMotorSpeed(double speedY, double speedX) {

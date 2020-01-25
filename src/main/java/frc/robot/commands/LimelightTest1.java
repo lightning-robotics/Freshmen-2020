@@ -9,11 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 // import com.kauailabs.navx.frc.AHRS;
 
@@ -44,12 +40,13 @@ public class LimelightTest1 extends Command {
     double x = Robot.tx.getDouble(0.0);
     double y = Robot.ty.getDouble(0.0);
 
+    
     System.out.println("x " + x + " Y " + y);
 
-    double Kp = -0.04;
-    double min_command = .08;
+    double Kp = 0.05;
+    double min_command = .1;
 
-    double heading_error = -x;
+    double heading_error = x;
     double steering_adjust = 0.0;
     
     if (x > 1.0){

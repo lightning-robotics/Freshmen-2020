@@ -30,7 +30,7 @@ public class TankDrive extends Command {
     double driverAxis = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_YAXIS);
     double driverAxis2 = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_XAXIS);
 
-    double varSpeed = 0.50;
+    double varSpeed = 0.30;
 
     if (Math.abs(driverAxis2) > RobotMap.DEADZONE || Math.abs(driverAxis) > RobotMap.DEADZONE) {
       if (driverAxis2 > varSpeed) {
