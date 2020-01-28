@@ -22,6 +22,10 @@ import frc.robot.Robot;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class LimelightTest1 extends Command {
+  double previousError = 0;
+  double errorSum = 0;
+  boolean stop = false;
+
   public LimelightTest1() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -38,24 +42,44 @@ public class LimelightTest1 extends Command {
   protected void execute() {
 
     double x = Robot.tx.getDouble(0.0);
-    double y = Robot.ty.getDouble(0.0);
+    // double y = Robot.ty.getDouble(0.0);
+    double Kp = .2;
+    double Ki = .02;
+    double headingError = x;
 
+    errorSum += headingError * .02;
+
+    double p = Kp * headingError;
+    double i = Ki * errorSum;
+    double steering_adjust = p + i;
+
+    if (Math.abs(headingError) <= 1 || stop) 
+      steering_adjust = 0;
+      System.out.println("Stopping");
+      Kp = .1;
+      Ki = .01;
+      stop = Math.abs(headingError) < 2;
     
-    System.out.println("x " + x + " Y " + y);
 
-    double Kp = 0.05;
-    double min_command = .1;
+    previousError = headingError;
 
-    double heading_error = x;
-    double steering_adjust = 0.0;
+    System.out.println("turn error " + steering_adjust + " actual error " + x);
+
+    // System.out.println("x " + x + " Y " + y);
+
+    // double Kp = 0.05;
+    // double min_command = .1;
+
+    // double heading_error = x;
+    // double steering_adjust = 0.0;
     
-    if (x > 1.0){
-      steering_adjust = Kp * heading_error - min_command;
+    // if (x > 1.0){
+    //   steering_adjust = Kp * heading_error - min_command;
       
-    }
-    else if (x < -1.0){
-      steering_adjust = Kp * heading_error + min_command;
-    }
+    // }
+    // else if (x < -1.0){
+    //   steering_adjust = Kp * heading_error + min_command;
+    // }
     
     Robot.driveTrain.FRMset(steering_adjust);
     Robot.driveTrain.BRMset(steering_adjust);

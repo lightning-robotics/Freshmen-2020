@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LimelightTest1;
 import frc.robot.commands.LimelightTest2;
+import frc.robot.commands.ShooterGoalOfTheDay;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.driveMecanum;
 import frc.robot.subsystems.DriveTrain;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   Command driveMecanum = new driveMecanum();
   Command limelightTest1 = new LimelightTest1();
   Command limelightTest2 = new LimelightTest2();
+  Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
   public static final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   public static final NetworkTableEntry tx = table.getEntry("tx");
   public static final NetworkTableEntry ty = table.getEntry("ty");
-  public static final NetworkTableEntry ta = table.getEntry("ta");
+  public static final NetworkTableEntry tv = table.getEntry("tv");
 
   /**
    * This function is run when the robot is first started up and should be
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     tankDrive.cancel();
+    shooterGoalOfTheDay.cancel();
   }
 
   @Override
@@ -141,7 +144,7 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called periodically during operator control.
+   * This function is called periodically during operator control.$
    */
   @Override
   public void teleopPeriodic() {
@@ -149,16 +152,19 @@ public class Robot extends TimedRobot {
     
     // // Robot.driveTrain.BLMset(-.5);
     // Robot.driveTrain.FLMset(.5);
+    
 
-    if (Robot.oi.driver.getAButton())
+    if (Robot.oi.driver.getAButton() && tv.getDouble(0.0) == 1)
       limelightTest1.start();
     else 
       limelightTest1.cancel();
 
-    if (Robot.oi.driver.getYButton())
+    if (Robot.oi.driver.getYButton() && tv.getDouble(0.0) == 1)
       limelightTest2.start();
     else
       limelightTest2.cancel();
+
+    shooterGoalOfTheDay.start();
 
 
   }
