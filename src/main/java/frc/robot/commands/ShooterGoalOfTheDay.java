@@ -15,8 +15,8 @@ import frc.robot.Robot;
 
 public class ShooterGoalOfTheDay extends Command {
 
-  TalonSRX shooter1 = new TalonSRX(2); //top
-  TalonSRX shooter2 = new TalonSRX(3);
+  TalonSRX shooter1 = new TalonSRX(3); //top
+  TalonSRX shooter2 = new TalonSRX(2);
 
   public ShooterGoalOfTheDay() {
     // Use requires() here to declare subsystem dependencies
@@ -35,8 +35,8 @@ public class ShooterGoalOfTheDay extends Command {
   protected void execute() {
 
     if (Robot.oi.driver.getXButton()) {
-      shooter1.set(ControlMode.PercentOutput, .3);
-      shooter2.set(ControlMode.PercentOutput, -.8);
+      shooter1.set(ControlMode.PercentOutput, -.70);
+      shooter2.set(ControlMode.PercentOutput, .58);
     } else {
       end();
     }

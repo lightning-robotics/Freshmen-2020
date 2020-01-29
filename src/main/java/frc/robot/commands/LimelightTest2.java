@@ -22,9 +22,9 @@ public class LimelightTest2 extends Command {
   private double pheta = 14.3;
   private double currentDistance;
 
-  private double kPDistance = -.3;
+  private double kPDistance = .4;
   private double targetDistance = 50;
-  private double kIDistance = -.02;
+  private double kIDistance = .03;
   private double errorSum = 0;
 
   public LimelightTest2() {
@@ -64,9 +64,6 @@ public class LimelightTest2 extends Command {
   @Override
   protected void execute() {  
     
-    double x = Robot.tx.getDouble(0.0);
-    double y = Robot.ty.getDouble(0.0);
-
     currentDistance = getDistanceFrom();
 
     // DriveTrain.frontRightMotor. (currentDistance);
@@ -74,24 +71,24 @@ public class LimelightTest2 extends Command {
     double distanceError = targetDistance - currentDistance;
     // DriveTrain.frontLeftMotor.set(ControlMode.Position, targetDistance);
 
-    if (Math.abs(distanceError) <= 5) distanceError = 0;
-
     errorSum += distanceError * .02;
 
-    double driving_adjust = distanceError * kPDistance;
+    double driving_adjust = distanceError * kPDistance + errorSum * kIDistance;
 
-    if (distanceError <= 15) driving_adjust += errorSum + kIDistance;
+    if (Math.abs(distanceError) <= 5) {
+      distanceError = 0;
+      driving_adjust = 0;
+      kPDistance = -.2;
+    }
 
     System.out.println("The current error is " + distanceError);
     System.out.println("The distance is " + currentDistance);
     System.out.println("the current adjust is " + driving_adjust);
 
-    if (distanceError != 0 && x != 0 && y != 0) {
-      Robot.driveTrain.FRMset(driving_adjust);
-      Robot.driveTrain.BRMset(driving_adjust);
-      Robot.driveTrain.FLMset(driving_adjust);
-      Robot.driveTrain.BLMset(driving_adjust);
-    } 
+    Robot.driveTrain.FRMset(driving_adjust);
+    Robot.driveTrain.FLMset(driving_adjust);
+    Robot.driveTrain.BLMset(driving_adjust);
+    Robot.driveTrain.BRMset(driving_adjust);
 
 
 
@@ -106,6 +103,8 @@ public class LimelightTest2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.FRMset(0);
+    Robot.driveTrain.BRMset(0);
   }
 
   // Called when another command which requires one or more of the same

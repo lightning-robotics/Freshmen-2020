@@ -24,6 +24,8 @@ import frc.robot.Robot;
 public class LimelightTest1 extends Command {
   double previousError = 0;
   double errorSum = 0;
+  double Kp = .2;
+  double Ki = .02;
   boolean stop = false;
 
   public LimelightTest1() {
@@ -43,8 +45,7 @@ public class LimelightTest1 extends Command {
 
     double x = Robot.tx.getDouble(0.0);
     // double y = Robot.ty.getDouble(0.0);
-    double Kp = .2;
-    double Ki = .02;
+
     double headingError = x;
 
     errorSum += headingError * .02;
@@ -58,7 +59,7 @@ public class LimelightTest1 extends Command {
       System.out.println("Stopping");
       Kp = .1;
       Ki = .01;
-      stop = Math.abs(headingError) < 2;
+      stop = (Math.abs(headingError) < 2);
     
 
     previousError = headingError;
@@ -82,9 +83,9 @@ public class LimelightTest1 extends Command {
     // }
     
     Robot.driveTrain.FRMset(steering_adjust);
-    Robot.driveTrain.BRMset(steering_adjust);
+    // Robot.driveTrain.BRMset(steering_adjust);
     Robot.driveTrain.FLMset(-steering_adjust);
-    Robot.driveTrain.BLMset(-steering_adjust);
+    // Robot.driveTrain.BLMset(-steering_adjust);
   //todo make more better and add face detection 
 
 
