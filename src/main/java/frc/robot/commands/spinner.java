@@ -7,19 +7,11 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class ShooterGoalOfTheDay extends Command {
-
-  TalonSRX shooter1 = new TalonSRX(2); //top
-  TalonSRX shooter2 = new TalonSRX(3);
-
-  public ShooterGoalOfTheDay() {
+public class spinner extends Command {
+  public spinner() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,23 +19,13 @@ public class ShooterGoalOfTheDay extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    shooter1.set(ControlMode.PercentOutput, 0);
-    shooter2.set(ControlMode.PercentOutput, 0);
+
+    double startTime = Timer.getFPGATimestamp();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-
-    if (Robot.oi.driver.getXButton()) {
-      shooter1.set(ControlMode.PercentOutput, .75);
-      shooter2.set(ControlMode.PercentOutput, -.70);
-    } else {
-      shooter1.set(ControlMode.PercentOutput, 0);
-      shooter2.set(ControlMode.PercentOutput, 0);
-    }
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -55,7 +37,6 @@ public class ShooterGoalOfTheDay extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
   }
 
   // Called when another command which requires one or more of the same

@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -24,7 +24,7 @@ public class LimelightTest2 extends Command {
 
   private double kPDistance = .4;
   private double targetDistance = 50;
-  private double kIDistance = .03;
+  private double kIDistance = .04;
   private double errorSum = 0;
 
   public LimelightTest2() {
@@ -43,20 +43,8 @@ public class LimelightTest2 extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
-    // DriveTrain.frontLeftMotor.selected
-
-    // DriveTrain.frontLeftMotor.config_kF(0, 0);
-    // DriveTrain.frontLeftMotor.config_kP(0, .15);
-    // DriveTrain.frontLeftMotor.config_kI(0, 0);
-    // DriveTrain.frontLeftMotor.config_kD(0, 1);
-
-    
-    // DriveTrain.frontRightMotor.config_kF(0, 0);
-    // DriveTrain.frontRightMotor.config_kP(0, .15);
-    // DriveTrain.frontRightMotor.config_kI(0, 0);
-    // DriveTrain.frontRightMotor.config_kD(0, 1);
-
+    // DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.BACK_LEFT_MOTOR);
+    // DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.BACK_RIGHT_MOTOR);
 
   }
 
@@ -78,12 +66,18 @@ public class LimelightTest2 extends Command {
     if (Math.abs(distanceError) <= 5) {
       distanceError = 0;
       driving_adjust = 0;
-      kPDistance = -.2;
+      kPDistance = .1;
+      kIDistance = .01;
+    } else {
+      kPDistance = .4;
+      kIDistance = .04;
     }
 
     System.out.println("The current error is " + distanceError);
     System.out.println("The distance is " + currentDistance);
-    System.out.println("the current adjust is " + driving_adjust);
+
+    System.out.println("right voltage " + Robot.driveTrain.frontRightMotor.getMotorOutputVoltage());
+    System.out.println("left voltage " + Robot.driveTrain.frontLeftMotor.getMotorOutputVoltage());
 
     Robot.driveTrain.FRMset(driving_adjust);
     Robot.driveTrain.FLMset(driving_adjust);
@@ -103,6 +97,8 @@ public class LimelightTest2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.FRONT_LEFT_MOTOR);
+    DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.FRONT_RIGHT_MOTOR);
     Robot.driveTrain.FRMset(0);
     Robot.driveTrain.BRMset(0);
   }
