@@ -7,8 +7,12 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class spinner extends Command {
   public spinner() {
@@ -16,16 +20,53 @@ public class spinner extends Command {
     // eg. requires(chassis);
   }
 
+  TalonSRX spinner = new TalonSRX(3);
+
+  private boolean isOn = false;
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
 
-    double startTime = Timer.getFPGATimestamp();
+    spinner.set(ControlMode.PercentOutput, 0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+    if (Robot.oi.driver.getBButton()) {   //remove later just for testing
+      isOn = true;
+    }
+
+
+    if (isOn == true) {
+
+    spinner.set(ControlMode.PercentOutput, -0.40);
+    Timer.delay(6.154); //4.7 upper limit 4.63 lowwer limit at 40%
+    //slow at 20% is 15 lots less error
+    spinner.set(ControlMode.PercentOutput, .20);
+    Timer.delay(0.245);
+
+
+  //  spinner.set(ControlMode.PercentOutput, -0.80);
+  //   Timer.delay(2.2);
+
+  //   spinner.set(ControlMode.PercentOutput, .40);
+  //   Timer.delay(0.245);
+
+
+  // spinner.set(ControlMode.PercentOutput, -1);
+  //   Timer.delay(1.7);
+
+  //   spinner.set(ControlMode.PercentOutput, .50);
+  //   Timer.delay(0.245);
+
+    isOn = false;
+    } else {
+      spinner.set(ControlMode.PercentOutput, 0);
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

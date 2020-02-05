@@ -23,6 +23,7 @@ import frc.robot.commands.ShooterGoalOfTheDay;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.driveMecanum;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.commands.spinner;
 
 
 /**
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   Command limelightTest1 = new LimelightTest1();
   Command limelightTest2 = new LimelightTest2();
   Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  Command spinner = new spinner();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -165,6 +167,7 @@ public class Robot extends TimedRobot {
       limelightTest2.cancel();
 
     shooterGoalOfTheDay.start();
+    spinner.start();
 
 
   }
