@@ -8,7 +8,8 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -17,75 +18,88 @@ import frc.robot.subsystems.DriveTrain;
 
 public class LimelightTest2 extends Command {
 
+  // variables for height of robot, height of target, angle of robot
   private double h1 = 7.02;
   private double h2 = 23.5;
-  private double pheta = 14.3;
-  private double currentDistance;
+  private double pheta = 18.123;
 
-  private double kPDistance = .4;
+  // our current distance and the distance where we want to be
+  private double currentDistance;
   private double targetDistance = 50;
-  private double kIDistance = .04;
+
+  // the PID variables of the program
+  private double kPDistance = .3;
+  private double kIDistance = .001;
+  private double kDDistance = .0001;
+
+  // the error sum for the integral and previous error for the derivative
   private double errorSum = 0;
+  private double previousError = 0;
 
   public LimelightTest2() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
 
+  /**
+   * gets the distance from robot to target
+   * @return estimated distance
+   */
   protected double getDistanceFrom() {
     double heightDegree = Robot.ty.getDouble(0.0);
     double radiansA1 = pheta * Math.PI / 180;
     double radiansA2 = heightDegree * Math.PI / 180;
-    
-    return (h2-h1) / Math.tan(radiansA1 + radiansA2);
+
+    return (h2 - h1) / Math.tan(radiansA1 + radiansA2);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    // DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.BACK_LEFT_MOTOR);
-    // DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.BACK_RIGHT_MOTOR);
-
+    end();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {  
-    
+  protected void execute() {
+    // gets the current distance of the limelight
     currentDistance = getDistanceFrom();
 
-    // DriveTrain.frontRightMotor. (currentDistance);
-
+    // calculates error
     double distanceError = targetDistance - currentDistance;
-    // DriveTrain.frontLeftMotor.set(ControlMode.Position, targetDistance);
 
-    errorSum += distanceError * .02;
+    // starts off with a P loop until 1/3 from target distance
+    double driving_adjust = distanceError * kPDistance;
 
-    double driving_adjust = distanceError * kPDistance + errorSum * kIDistance;
-
-    if (Math.abs(distanceError) <= 5) {
-      distanceError = 0;
-      driving_adjust = 0;
-      kPDistance = .1;
-      kIDistance = .01;
-    } else {
-      kPDistance = .4;
-      kIDistance = .04;
+    // adds on ID to the loop when 1/3 from target distance
+    if (Math.abs(distanceError) <= targetDistance * (1.0 / 3)) {
+      double futureError = (distanceError - previousError) / .02;
+      driving_adjust += errorSum * kIDistance + futureError * kDDistance;
     }
 
-    System.out.println("The current error is " + distanceError);
-    System.out.println("The distance is " + currentDistance);
+    // calculates sum of the area
+    errorSum += distanceError * .02;
 
-    System.out.println("right voltage " + Robot.driveTrain.frontRightMotor.getMotorOutputVoltage());
-    System.out.println("left voltage " + Robot.driveTrain.frontLeftMotor.getMotorOutputVoltage());
+    // peaks the output from -12 to 12 for voltage
+    driving_adjust = Math.max(Math.abs(driving_adjust), 12) * (driving_adjust / driving_adjust);
 
-    Robot.driveTrain.FRMset(driving_adjust);
-    Robot.driveTrain.FLMset(driving_adjust);
-    Robot.driveTrain.BLMset(driving_adjust);
-    Robot.driveTrain.BRMset(driving_adjust);
+    System.out.println("The current adjust is " + driving_adjust);
+    System.out.println(Robot.driveTrain.frontLeftMotor.getSelectedSensorVelocity());
 
-
-
+    // sets the robot to drive until 5 inches away
+    if (Math.abs(distanceError) > 5) {
+      // gets the current driving adjust from -1 to 1
+      double percentAdjust = driving_adjust / 12;
+      // sets the talons' speed to the percent adjust 
+      Robot.driveTrain.frontLeftMotor.set(ControlMode.PercentOutput, percentAdjust);
+      Robot.driveTrain.frontRightMotor.set(ControlMode.PercentOutput, percentAdjust);
+    } else {
+      // breaks when 5 inches away
+      Robot.driveTrain.frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+      Robot.driveTrain.frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    }
+    // sets the previous error to the current error of interation
+    previousError = distanceError;
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -97,15 +111,16 @@ public class LimelightTest2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.FRONT_LEFT_MOTOR);
-    DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.FRONT_RIGHT_MOTOR);
     Robot.driveTrain.FRMset(0);
+    Robot.driveTrain.FLMset(0);
     Robot.driveTrain.BRMset(0);
+    Robot.driveTrain.BLMset(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
