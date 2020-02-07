@@ -81,7 +81,7 @@ public class LimelightTest2 extends Command {
     errorSum += distanceError * .02;
 
     // peaks the output from -12 to 12 for voltage
-    driving_adjust = Math.max(Math.abs(driving_adjust), 12) * (driving_adjust / driving_adjust);
+    driving_adjust = Math.min(Math.abs(driving_adjust), 12*.8) * (driving_adjust / driving_adjust);
 
     System.out.println("The current adjust is " + driving_adjust);
     System.out.println(Robot.driveTrain.frontLeftMotor.getSelectedSensorVelocity());
@@ -91,8 +91,8 @@ public class LimelightTest2 extends Command {
       // gets the current driving adjust from -1 to 1
       double percentAdjust = driving_adjust / 12;
       // sets the talons' speed to the percent adjust 
-      Robot.driveTrain.frontLeftMotor.set(ControlMode.PercentOutput, percentAdjust);
-      Robot.driveTrain.frontRightMotor.set(ControlMode.PercentOutput, percentAdjust);
+      Robot.driveTrain.frontLeftMotor.set(ControlMode.PercentOutput, -percentAdjust*.97);
+      Robot.driveTrain.frontRightMotor.set(ControlMode.PercentOutput, -percentAdjust);
     } else {
       // breaks when 5 inches away
       Robot.driveTrain.frontLeftMotor.setNeutralMode(NeutralMode.Brake);
