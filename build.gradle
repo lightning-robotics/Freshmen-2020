@@ -1,6 +1,10 @@
 plugins {
     id "java"
+<<<<<<< HEAD
     id "edu.wpi.first.GradleRIO" version "2020.2.2"
+=======
+    id "edu.wpi.first.GradleRIO" version "2019.4.1"
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,6 +44,7 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
+<<<<<<< HEAD
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -57,12 +62,31 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+=======
+// Maven central needed for JUnit
+repositories {
+    mavenCentral()
+}
+
+// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+// Also defines JUnit 4.
+dependencies {
+    compile wpi.deps.wpilib()
+    compile wpi.deps.vendor.java()
+    nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
+    nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+    testCompile 'junit:junit:4.12'
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
 jar {
+<<<<<<< HEAD
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+=======
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }

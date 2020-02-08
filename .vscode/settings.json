@@ -7,10 +7,19 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "bin/": true,
+<<<<<<< HEAD
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
     "**/*~": true
+=======
+    ".classpath": true,
+    ".project": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
   }
 }
