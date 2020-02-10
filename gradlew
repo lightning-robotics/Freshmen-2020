@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
 #
 # Copyright 2015 the original author or authors.
 #
@@ -16,6 +20,11 @@
 # limitations under the License.
 #
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
 ##############################################################################
 ##
 ##  Gradle start up script for UN*X
@@ -44,7 +53,15 @@ APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+<<<<<<< HEAD
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+=======
+<<<<<<< HEAD
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+=======
+DEFAULT_JVM_OPTS='"-Xmx64m"'
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
@@ -125,8 +142,18 @@ if $darwin; then
     GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
 
+<<<<<<< HEAD
 # For Cygwin or MSYS, switch paths to Windows format before running java
 if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
+=======
+<<<<<<< HEAD
+# For Cygwin or MSYS, switch paths to Windows format before running java
+if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
+=======
+# For Cygwin, switch paths to Windows format before running java
+if $cygwin ; then
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
     APP_HOME=`cygpath --path --mixed "$APP_HOME"`
     CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
     JAVACMD=`cygpath --unix "$JAVACMD"`
@@ -154,6 +181,10 @@ if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
         else
             eval `echo args$i`="\"$arg\""
         fi
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
         i=`expr $i + 1`
     done
     case $i in
@@ -167,6 +198,24 @@ if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
         7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
         8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
         9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
+<<<<<<< HEAD
+=======
+=======
+        i=$((i+1))
+    done
+    case $i in
+        (0) set -- ;;
+        (1) set -- "$args0" ;;
+        (2) set -- "$args0" "$args1" ;;
+        (3) set -- "$args0" "$args1" "$args2" ;;
+        (4) set -- "$args0" "$args1" "$args2" "$args3" ;;
+        (5) set -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
+        (6) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
+        (7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
+        (8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
+        (9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
     esac
 fi
 
@@ -175,9 +224,28 @@ save () {
     for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
     echo " "
 }
+<<<<<<< HEAD
 APP_ARGS=`save "$@"`
+=======
+<<<<<<< HEAD
+APP_ARGS=`save "$@"`
+=======
+APP_ARGS=$(save "$@")
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+# by default we should be in the correct project dir, but when run from Finder on Mac, the cwd is wrong
+if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
+  cd "$(dirname "$0")"
+fi
+
+>>>>>>> a82dee92d3cc63fc6f723f0afa6c12fe048b4960
+>>>>>>> c4e176edb4603655250f5add2751837568ec4468
 exec "$JAVACMD" "$@"
