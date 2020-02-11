@@ -14,6 +14,8 @@
 *.gch
 *.pch
 
+
+\
 # Compiled Dynamic libraries
 *.so
 *.dylib
@@ -155,7 +157,12 @@ gradle-app.setting
 .project
 .settings/
 bin/
+
 imgui.ini
 
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
+
+
+# End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
+src/main/java/frc/robot/commands/driveMecanum.java
