@@ -32,8 +32,13 @@ public class LimelightTurnToAngle extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          Robot.driveTrain.FRMset(output);
-          Robot.driveTrain.FLMset(-output);
+          if (Robot.limelight.getXAngle() != 0) {
+            Robot.driveTrain.FRMset(-output);
+            Robot.driveTrain.FLMset(output);
+          } else {
+            Robot.driveTrain.FRMset(0);
+            Robot.driveTrain.FLMset(0);
+          }
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

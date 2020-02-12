@@ -28,7 +28,7 @@ public class OI {
 
     // turn to face target button
     JoystickButton turnButton = new JoystickButton(driver, Button.kA.value);
-    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(3));
+    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(0.5));   //change!! testing only do like 3 or something
 
     // pratice command to ensure that configuring buttons is working
     JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
