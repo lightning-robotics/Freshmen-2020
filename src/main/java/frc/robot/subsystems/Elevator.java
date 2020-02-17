@@ -24,13 +24,16 @@ public class Elevator extends SubsystemBase {
     private Encoder encoderRight = new Encoder(RobotMap.ELEVATOR_RIGHT_ENCODER_A, RobotMap.ELEVATOR_RIGHT_ENCODER_B);
     private Encoder encoderLeft = new Encoder(RobotMap.ELEVATOR_LEFT_ENCODER_A, RobotMap.ELEVATOR_LEFT_ENCODER_B);
 
+    // resetting the encoders at the start of the PID
+    private static boolean resetValue = true;
+
   /**
    * Creates a new Elevator.
    */
   public Elevator() {
     elevatorLeft.setInverted(true);
-    encoderLeft.setDistancePerPulse(4);
-    encoderRight.setDistancePerPulse(4);
+    encoderLeft.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
+    encoderRight.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
   }
 
   @Override
@@ -53,6 +56,11 @@ public class Elevator extends SubsystemBase {
 
   // ensure that we don't put too much power on a slow motor
   public double getCombinedDistance() {
+    if (resetValue) {
+      encoderLeft.reset();
+      encoderRight.reset();
+      resetValue = false;
+    }
     return Math.min(getLeftDistance(), getRightDistance());
   }
 }

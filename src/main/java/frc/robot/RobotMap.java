@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.util.function.DoubleSupplier;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -55,9 +53,10 @@ public class RobotMap {
   public static final int ELEVATOR_LEFT = 2;
   public static final int ELEVATOR_LEFT_ENCODER_A = 0;
   public static final int ELEVATOR_LEFT_ENCODER_B = 1;
+  public static final double DISTANCE_PER_PLUSE = 4 * Math.PI;
 
   // PID variables for elevator height
-  public static final double ELEVATOR_TARGET_HEIGHT = 10;
+  public static final double ELEVATOR_TARGET_HEIGHT = -10;
   public static final double kPElevator = 0.2;
   public static final double kIElevator = 0.0001;
   public static final double kDElevator = 0.0;
