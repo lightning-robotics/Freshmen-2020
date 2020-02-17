@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Mechanisms.ElevatorUp;
 import frc.robot.commands.Mechanisms.ShooterGoalOfTheDay;
 import frc.robot.commands.Mechanisms.Spinner;
 import frc.robot.commands.Driving.TankDrive;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
 
 
@@ -30,12 +32,14 @@ import frc.robot.subsystems.Limelight;
 public class Robot extends TimedRobot {
   public static OI oi;
 
-  public static DriveTrain driveTrain = new DriveTrain();
-  public static Limelight limelight = new Limelight();
+  public static final DriveTrain driveTrain = new DriveTrain();
+  public static final Limelight limelight = new Limelight();
+  public static final Elevator elevator = new Elevator();
 
   public Command tankDrive = new TankDrive();
   Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
   Command spinner = new Spinner();
+  ElevatorUp elevatorUp = new ElevatorUp();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -146,6 +150,7 @@ public class Robot extends TimedRobot {
 
     spinner.start();
     shooterGoalOfTheDay.start();
+    elevatorUp.schedule();
 
     // TODO: Intake
   }
