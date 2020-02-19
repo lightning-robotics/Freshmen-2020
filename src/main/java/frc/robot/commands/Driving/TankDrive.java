@@ -28,8 +28,8 @@ public class TankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double driverAxis = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_YAXIS);
-    double driverAxis2 = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_XAXIS);
+    double driverAxis = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS);
+    double driverAxis2 = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS);
 
     double varSpeed = 0.70;
 

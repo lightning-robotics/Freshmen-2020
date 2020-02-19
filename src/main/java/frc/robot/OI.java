@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Driving.TestCommand;
 import frc.robot.commands.LimelightCommands.LimelightDriveDistance;
 import frc.robot.commands.LimelightCommands.LimelightTurnToAngle;
+import frc.robot.commands.Mechanisms.ElevatorPullSelfUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -28,21 +29,24 @@ public class OI {
 
     // turn to face target button
     JoystickButton turnButton = new JoystickButton(driver, Button.kA.value);
-    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(3));
+    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(0.5));   //change!! testing only do like 3 or something
 
     // pratice command to ensure that configuring buttons is working
     JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
     testButton.whenPressed(new TestCommand().withTimeout(3));
 
     // TODO: Elevator
+    JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
+    elevatorButton.whenPressed(new ElevatorPullSelfUp());
     System.out.println("Buttons configured");
   }
 
   // Declaration of driver xbox controller blah blah blah and whatever
   public XboxController driver = new XboxController(RobotMap.ROBOT_DRIVE_CONTROLLER);
+  public XboxController mechanism = new XboxController(RobotMap.ROBOT_MECHANISM_CONTROLLER);
 
-  public double getDriverAxis(int axis) {
-    return driver.getRawAxis(axis);
+  public double getControllerAxis(XboxController controller, int axis) {
+    return controller.getRawAxis(axis);
   }
 
   //// CREATING BUTTONS

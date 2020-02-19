@@ -29,8 +29,8 @@ public class driveMecanum extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double driverAxisL = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_YAXIS) * .5;
-    double driverAxisR = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_XAXIS_2) * .5;
+    double driverAxisL = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS) * .5;
+    double driverAxisR = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS_2) * .5;
     //System.out.println(driverAxisL);
     // turn right
     if (Robot.oi.driver.getTriggerAxis(Hand.kRight) > RobotMap.TRIGGER_DEADZONE) {

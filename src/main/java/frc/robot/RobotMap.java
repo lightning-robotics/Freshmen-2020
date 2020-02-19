@@ -31,6 +31,10 @@ public class RobotMap {
   public static final int ROBOT_DRIVE_XAXIS = 0;
   public static final int ROBOT_DRIVE_XAXIS_2 = 4;
 
+  // Mechanism Controller Port
+  public static final int ROBOT_MECHANISM_CONTROLLER = 1;
+
+
   // spinner motor port
   public static final int SPINNER_MOTOR = 3;
 
@@ -41,6 +45,21 @@ public class RobotMap {
   // dead zone
   public static final double DEADZONE = 0.3; //why not
   public static final double TRIGGER_DEADZONE = 0.1;
+
+  // elevator motor port
+  public static final int ELEVATOR_RIGHT = 1;
+  public static final int ELEVATOR_RIGHT_ENCODER_A = 0;
+  public static final int ELEVATOR_RIGHT_ENCODER_B = 1;
+  public static final int ELEVATOR_LEFT = 2;
+  public static final int ELEVATOR_LEFT_ENCODER_A = 0;
+  public static final int ELEVATOR_LEFT_ENCODER_B = 1;
+  public static final double DISTANCE_PER_PLUSE = 4 * Math.PI;
+
+  // PID variables for elevator height
+  public static final double ELEVATOR_TARGET_HEIGHT = -10;
+  public static final double kPElevator = 0.2;
+  public static final double kIElevator = 0.0001;
+  public static final double kDElevator = 0.0;
 
   // variables for height of robot, height of target, angle of robot
   public static final double HEIGHT_1 = 7.02;
