@@ -5,49 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.LimelightCommands;
+package frc.robot.commands.Mechanisms;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class LimelightTurnToAngle extends PIDCommand {
+public class ElevatorPullSelfUp extends PIDCommand {
   /**
-   * Creates a new LimelightTurnToAngle.
+   * Creates a new ElevatorPullSelfUp.
    */
-  public LimelightTurnToAngle() {
+  // TODO: write PID to pull elevator to certain height and maintain position
+  public ElevatorPullSelfUp() {
     super(
         // The controller that the command will use
-        new PIDController(RobotMap.KPTurn, RobotMap.KITurn, RobotMap.KDTurn),
+        new PIDController(RobotMap.kPElevator, RobotMap.kIElevator, RobotMap.kDElevator),
         // This should return the measurement
-        Robot.limelight::getXAngle,
+        Robot.elevator::getCombinedDistance,
         // This should return the setpoint (can also be a constant)
-        RobotMap.TARGET_ANGLE,
+        RobotMap.ELEVATOR_TARGET_HEIGHT,
         // This uses the output
         output -> {
           // Use the output here
-          if (Robot.limelight.getXAngle() != 0) {
-            Robot.driveTrain.FRMset(-output);
-            Robot.driveTrain.FLMset(output);
-          } else {
-            Robot.driveTrain.FRMset(0);
-            Robot.driveTrain.FLMset(0);
-          }
+          Robot.elevator.setPower(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(RobotMap.TURN_TOLERANCE);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return false;
   }
 }
