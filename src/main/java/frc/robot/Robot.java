@@ -14,12 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Mechanisms.ElevatorUp;
-import frc.robot.commands.Mechanisms.ShooterGoalOfTheDay;
 import frc.robot.commands.Mechanisms.Spinner;
+import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
+import frc.robot.commands.Shooter.ShooterSpeed;
 import frc.robot.commands.Driving.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 
 
 /**
@@ -35,11 +37,13 @@ public class Robot extends TimedRobot {
   public static final DriveTrain driveTrain = new DriveTrain();
   public static final Limelight limelight = new Limelight();
   public static final Elevator elevator = new Elevator();
+  public static final Shooter shooter = new Shooter();
 
-  public Command tankDrive = new TankDrive();
+  Command tankDrive = new TankDrive();
   Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
   Command spinner = new Spinner();
   ElevatorUp elevatorUp = new ElevatorUp();
+  ShooterSpeed shooterSpeed = new ShooterSpeed();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -83,7 +87,8 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     tankDrive.cancel();
     spinner.cancel();
-    shooterGoalOfTheDay.cancel();
+    // shooterGoalOfTheDay.cancel();
+    shooterSpeed.cancel();
   }
 
   @Override
@@ -149,8 +154,9 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
 
     spinner.start();
-    shooterGoalOfTheDay.start();
+    // shooterGoalOfTheDay.start();
     elevatorUp.schedule();
+    shooterSpeed.schedule();
 
     // TODO: Intake
   }
