@@ -46,7 +46,6 @@ public class Robot extends TimedRobot {
 
   Command tankDrive = new TankDrive();
   Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
-  ShooterSpeed shooterSpeed = new ShooterSpeed();
   Command spinner = new Spinner();
   ElevatorUp elevatorUp = new ElevatorUp();
   IntakeInOut intakeInOut = new IntakeInOut();
