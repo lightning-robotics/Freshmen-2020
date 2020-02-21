@@ -24,6 +24,6 @@ public class AutoLeftOrRight extends SequentialCommandGroup {
   public AutoLeftOrRight() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(1, .2), (Command) new LimelightTurnToAngle(), (Command) new ShooterGoalOfTheDay());
+    super((Command) new DriveForTime(1, .2), (Command) new LimelightTurnToAngle().withTimeout(3), (Command) new ShooterGoalOfTheDay());
   }
 }

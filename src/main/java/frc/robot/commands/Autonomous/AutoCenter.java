@@ -24,6 +24,6 @@ public class AutoCenter extends SequentialCommandGroup {
   public AutoCenter() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(1, .4), (Command) new LimelightTurnToAngle(), (Command) new ShooterGoalOfTheDay());
+    super((Command) new DriveForTime(1, .4), (Command) new LimelightTurnToAngle().withTimeout(3), (Command) new ShooterGoalOfTheDay());
   }
 }

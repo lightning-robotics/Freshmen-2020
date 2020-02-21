@@ -35,6 +35,7 @@ public class DriveForTime extends CommandBase {
   public void execute() {
     Robot.driveTrain.driveAll(speed);
     Timer.delay(time);
+    Robot.driveTrain.driveAll(0);
     done = true;
     isFinished();
   }

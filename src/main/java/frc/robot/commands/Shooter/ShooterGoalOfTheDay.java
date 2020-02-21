@@ -13,6 +13,8 @@ import frc.robot.Robot;
 
 public class ShooterGoalOfTheDay extends Command {
 
+  public boolean done = false;
+
   public ShooterGoalOfTheDay() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -33,9 +35,10 @@ public class ShooterGoalOfTheDay extends Command {
     // TODO: change this to mechanism joystick once equations are found
     if (Robot.oi.driver.getXButton()) {
       Robot.shooter.shootDistance(distance);
-    } else {
-      initialize();
+      done = true;
+      isFinished();
     }
+    initialize();
 
   }
 
@@ -48,6 +51,6 @@ public class ShooterGoalOfTheDay extends Command {
   // Returns true when the command should end
   @Override
   public boolean isFinished() {
-    return false;
+    return done;
   }
 }
