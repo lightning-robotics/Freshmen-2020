@@ -8,10 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -27,33 +27,19 @@ public class DriveTrain extends Subsystem {
   public static final TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
   public static final TalonSRX frontLeftMotor = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
   public static final TalonSRX backLeftMotor = new TalonSRX(RobotMap.BACK_LEFT_MOTOR);
-  // public SpeedController frontRightMotor = new PWMTalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
-  // public SpeedController backRightMotor = new PWMTalonSRX(RobotMap.BACK_RIGHT_MOTOR);
-  // public SpeedController frontLeftMotor = new PWMTalonSRX(RobotMap.FRONT_LEFT_MOTOR);
-  // public SpeedController backLeftMotor = new PWMTalonSRX(RobotMap.BACK_LEFT_MOTOR);
-
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // // setDefaultCommand(new MySpecialCommand());
-    // backRightMotor.follow(frontRightMotor);
-    // backLeftMotor.follow(frontLeftMotor);
 //switch later
     backLeftMotor.setInverted(true);
     frontLeftMotor.setInverted(true);
 
-    frontLeftMotor.configNominalOutputForward(0);
-    frontLeftMotor.configNominalOutputReverse(0);
-    frontRightMotor.configNominalOutputForward(0);
-    frontRightMotor.configNominalOutputReverse(0);
-
-    frontLeftMotor.configPeakOutputForward(1);
-    frontLeftMotor.configPeakOutputReverse(-1);
-
-    
-    frontRightMotor.configPeakOutputForward(1);
-    frontRightMotor.configPeakOutputReverse(-1);
+    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    backRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setRightMotorSpeed(double speedY, double speedX) {
@@ -65,7 +51,7 @@ public class DriveTrain extends Subsystem {
     } 
     
       frontRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
-      backRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
+      // backRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
   }
 
   public void setLeftMotorSpeed(double speedY, double speedX) {
@@ -76,7 +62,7 @@ public class DriveTrain extends Subsystem {
       speedX = 0;
     }
     frontLeftMotor.set(ControlMode.PercentOutput, speedY + speedX);
-    backLeftMotor.set(ControlMode.PercentOutput, speedY + speedX);
+    // backLeftMotor.set(ControlMode.PercentOutput, speedY + speedX);
   }
 
   public void FLMset(double speed) {
@@ -101,6 +87,13 @@ public class DriveTrain extends Subsystem {
     if (getDeadzone(speed)) speed = 0;
 
     backRightMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void driveAll(double speed) {
+    frontLeftMotor.set(ControlMode.PercentOutput, speed);
+    backLeftMotor.set(ControlMode.PercentOutput, speed);
+    frontRightMotor.set(ControlMode.PercentOutput, speed);
+    backLeftMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean getDeadzone(double speed) {

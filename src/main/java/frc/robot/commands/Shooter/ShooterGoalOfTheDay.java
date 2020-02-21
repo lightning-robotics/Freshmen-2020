@@ -5,19 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
 public class ShooterGoalOfTheDay extends Command {
-
-  TalonSRX shooter1 = new TalonSRX(RobotMap.SHOOTER_TOP); //top
-  TalonSRX shooter2 = new TalonSRX(RobotMap.SHOOTER_BOTTOM);
 
   public ShooterGoalOfTheDay() {
     // Use requires() here to declare subsystem dependencies
@@ -26,41 +20,34 @@ public class ShooterGoalOfTheDay extends Command {
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-    shooter1.set(ControlMode.PercentOutput, 0);
-    shooter2.set(ControlMode.PercentOutput, 0);
+  public void initialize() {
+    Robot.shooter.stopShooter();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
 
+    double distance = Robot.limelight.getDistanceFrom();
 
+    // TODO: change this to mechanism joystick once equations are found
     if (Robot.oi.driver.getXButton()) {
-      shooter1.set(ControlMode.PercentOutput, .75);
-      shooter2.set(ControlMode.PercentOutput, -.70);
+      Robot.shooter.shootDistance(distance);
     } else {
-      shooter1.set(ControlMode.PercentOutput, 0);
-      shooter2.set(ControlMode.PercentOutput, 0);
+      initialize();
     }
 
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
   // Called once after isFinished returns true
   @Override
-  protected void end() {
-
+  public void end() {
+    initialize();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+  // Returns true when the command should end
   @Override
-  protected void interrupted() {
+  public boolean isFinished() {
+    return false;
   }
 }

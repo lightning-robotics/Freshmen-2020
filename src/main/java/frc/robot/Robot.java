@@ -7,24 +7,24 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.LimelightTest1;
-import frc.robot.commands.LimelightTest2;
-import frc.robot.commands.ShooterGoalOfTheDay;
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.driveMecanum;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Mechanisms.ElevatorUp;
+import frc.robot.commands.Mechanisms.Spinner;
+import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
+import frc.robot.commands.Shooter.ShooterSpeed;
+import frc.robot.commands.Autonomous.AutoCenter;
+import frc.robot.commands.Autonomous.AutoLeftOrRight;
+import frc.robot.commands.Driving.TankDrive;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.commands.spinner;
-
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,34 +36,36 @@ import frc.robot.commands.spinner;
 public class Robot extends TimedRobot {
   public static OI oi;
 
-  public static DriveTrain driveTrain = new DriveTrain();
+  public static final DriveTrain driveTrain = new DriveTrain();
+  public static final Limelight limelight = new Limelight();
+  public static final Elevator elevator = new Elevator();
+  public static final Shooter shooter = new Shooter();
 
-  public Command tankDrive = new TankDrive();
-  Command driveMecanum = new driveMecanum();
-  Command limelightTest1 = new LimelightTest1();
-  Command limelightTest2 = new LimelightTest2();
+  Command tankDrive = new TankDrive();
   Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
-  Command spinner = new spinner();
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-
-  public static final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  public static final NetworkTableEntry tx = table.getEntry("tx");
-  public static final NetworkTableEntry ty = table.getEntry("ty");
-  public static final NetworkTableEntry tv = table.getEntry("tv");
+  Command spinner = new Spinner();
+  ElevatorUp elevatorUp = new ElevatorUp();
+  ShooterSpeed shooterSpeed = new ShooterSpeed();
+  SequentialCommandGroup m_autonomousCommand;
+  SendableChooser<SequentialCommandGroup> m_chooser = new SendableChooser<>();
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
     oi = new OI();
+
+    m_chooser.addOption("center", new AutoCenter());
+    m_chooser.addOption("left or right", new AutoLeftOrRight());
+    
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
-
+    // set the back motors to follow the front
+    DriveTrain.backLeftMotor.follow(DriveTrain.frontLeftMotor);
+    DriveTrain.backRightMotor.follow(DriveTrain.frontRightMotor);
   }
 
   /**
@@ -76,6 +78,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
   }
 
   /**
@@ -86,7 +89,9 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     tankDrive.cancel();
-    shooterGoalOfTheDay.cancel();
+    spinner.cancel();
+    // shooterGoalOfTheDay.cancel();
+    shooterSpeed.cancel();
   }
 
   @Override
@@ -118,7 +123,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+      m_autonomousCommand.schedule();
     }
   }
 
@@ -127,7 +132,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -139,9 +144,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    DriveTrain.backLeftMotor.set(ControlMode.Follower, RobotMap.FRONT_LEFT_MOTOR);
-    DriveTrain.backRightMotor.set(ControlMode.Follower, RobotMap.FRONT_RIGHT_MOTOR);
     
+    // starting the drive function
     tankDrive.start();
   }
 
@@ -151,25 +155,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    
-    // // Robot.driveTrain.BLMset(-.5);
-    // Robot.driveTrain.FLMset(.5);
-    
 
-    if (Robot.oi.driver.getAButton() && tv.getDouble(0.0) == 1)
-      limelightTest1.start();
-    else 
-      limelightTest1.cancel();
-
-    if (Robot.oi.driver.getYButton() && tv.getDouble(0.0) == 1)
-      limelightTest2.start();
-    else
-      limelightTest2.cancel();
-
-    shooterGoalOfTheDay.start();
     spinner.start();
+    // shooterGoalOfTheDay.start();
+    elevatorUp.schedule();
+    shooterSpeed.schedule();
 
-
+    // TODO: Intake
   }
 
   /**

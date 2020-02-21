@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Driving;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,8 +29,8 @@ public class driveMecanum extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double driverAxisL = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_YAXIS) * .5;
-    double driverAxisR = Robot.oi.getDriverAxis(RobotMap.ROBOT_DRIVE_XAXIS_2) * .5;
+    double driverAxisL = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS) * .5;
+    double driverAxisR = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS_2) * .5;
     //System.out.println(driverAxisL);
     // turn right
     if (Robot.oi.driver.getTriggerAxis(Hand.kRight) > RobotMap.TRIGGER_DEADZONE) {
@@ -44,16 +44,6 @@ public class driveMecanum extends Command {
       Robot.driveTrain.setLeftMotorSpeed(value, 0);
       Robot.driveTrain.setRightMotorSpeed(value * -1, 0);
     }
-    // // drive down left and forward right
-    // else if (Math.abs(driverAxisL) > RobotMap.DEADZONE && Robot.oi.driver.getBumper(Hand.kLeft)) {
-    //   Robot.driveTrain.FLMset(driverAxisL);
-    //   Robot.driveTrain.BRMset(driverAxisL);
-    // }
-    // // drive forward right and down left
-    // else if (Math.abs(driverAxisL) > RobotMap.DEADZONE && Robot.oi.driver.getBumper(Hand.kRight)) {
-    //   Robot.driveTrain.BLMset(driverAxisL);
-    //   Robot.driveTrain.FRMset(driverAxisL);
-    // } 
     // drive forward right
     else if (driverAxisL < -1*RobotMap.DEADZONE && Robot.oi.driver.getBumper(Hand.kRight)) {
       Robot.driveTrain.FLMset(driverAxisL);

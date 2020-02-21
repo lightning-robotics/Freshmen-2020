@@ -5,67 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Driving;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class spinner extends Command {
-  public spinner() {
+public class TankDrive extends Command {
+  public TankDrive() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.driveTrain);
   }
-
-  TalonSRX spinner = new TalonSRX(3);
-
-  private boolean isOn = false;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
-    spinner.set(ControlMode.PercentOutput, 0);
+    Robot.driveTrain.setLeftMotorSpeed(0, 0);
+    Robot.driveTrain.setRightMotorSpeed(0, 0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double driverAxis = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS);
+    double driverAxis2 = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS);
 
-    if (Robot.oi.driver.getBButton()) {   //remove later just for testing
-      isOn = true;
-    }
+    double varSpeed = 0.70;
 
+    driverAxis = Math.min(Math.abs(driverAxis), varSpeed) * (driverAxis/Math.abs(driverAxis));
+    
+    driverAxis2 = Math.min(Math.abs(driverAxis2), varSpeed) * (driverAxis2/Math.abs(driverAxis2));
 
-    if (isOn == true) {
+    if (Robot.driveTrain.getDeadzone(driverAxis2)) 
+      driverAxis2 = 0;
+    if (Robot.driveTrain.getDeadzone(driverAxis))
+      driverAxis = 0;
+    Robot.driveTrain.setLeftMotorSpeed(-driverAxis2 + driverAxis, 0);
+    Robot.driveTrain.setRightMotorSpeed(driverAxis2 + driverAxis, 0);
+    // System.out.println("Driving backward");
+    // System.out.println("Driving forward");
 
-    spinner.set(ControlMode.PercentOutput, -0.40);
-    Timer.delay(6.154); //4.7 upper limit 4.63 lowwer limit at 40%
-    //slow at 20% is 15 lots less error
-    spinner.set(ControlMode.PercentOutput, .20);
-    Timer.delay(0.245);
-
-
-  //  spinner.set(ControlMode.PercentOutput, -0.80);
-  //   Timer.delay(2.2);
-
-  //   spinner.set(ControlMode.PercentOutput, .40);
-  //   Timer.delay(0.245);
-
-
-  // spinner.set(ControlMode.PercentOutput, -1);
-  //   Timer.delay(1.7);
-
-  //   spinner.set(ControlMode.PercentOutput, .50);
-  //   Timer.delay(0.245);
-
-    isOn = false;
-    } else {
-      spinner.set(ControlMode.PercentOutput, 0);
-    }
+    // Robot.driveTrain.setLeftMotorSpeed(driverAxis, driverAxis2);
+    // Robot.driveTrain.setRightMotorSpeed(driverAxis, driverAxis2);
 
   }
 
@@ -78,11 +59,13 @@ public class spinner extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    initialize();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
