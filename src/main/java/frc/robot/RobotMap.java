@@ -80,6 +80,13 @@ public class RobotMap {
   public static final double TURN_TOLERANCE = 1; // error of turn
   public static final double TARGET_ANGLE = 0;
 
+  // Intake motor ports
+  public static final int LEFT_INTAKE_MOTOR = 0;
+  public static final int RIGHT_INTAKE_MOTOR = 1;
+  
+  // Intake motor speed
+  public static final double INTAKE_SPEED = .4;
+
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
