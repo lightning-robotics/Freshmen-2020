@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -34,6 +35,11 @@ public class DriveTrain extends Subsystem {
 //switch later
     backLeftMotor.setInverted(true);
     frontLeftMotor.setInverted(true);
+
+    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    backRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setRightMotorSpeed(double speedY, double speedX) {
@@ -83,14 +89,14 @@ public class DriveTrain extends Subsystem {
     backRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public static void driveAll(double speed) {
+  public void driveAll(double speed) {
     frontLeftMotor.set(ControlMode.PercentOutput, speed);
     backLeftMotor.set(ControlMode.PercentOutput, speed);
     frontRightMotor.set(ControlMode.PercentOutput, speed);
     backLeftMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public static boolean getDeadzone(double speed) {
+  public boolean getDeadzone(double speed) {
     return Math.abs(speed) < RobotMap.DEADZONE;
   }
   

@@ -35,7 +35,6 @@ public class OI {
     JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
     testButton.whenPressed(new TestCommand().withTimeout(3));
 
-    // TODO: Elevator
     JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
     elevatorButton.whenPressed(new ElevatorPullSelfUp());
     System.out.println("Buttons configured");

@@ -10,7 +10,6 @@ package frc.robot.commands.Driving;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.DriveTrain;
 
 public class TankDrive extends Command {
   public TankDrive() {
@@ -37,9 +36,9 @@ public class TankDrive extends Command {
     
     driverAxis2 = Math.min(Math.abs(driverAxis2), varSpeed) * (driverAxis2/Math.abs(driverAxis2));
 
-    if (DriveTrain.getDeadzone(driverAxis2)) 
+    if (Robot.driveTrain.getDeadzone(driverAxis2)) 
       driverAxis2 = 0;
-    if (DriveTrain.getDeadzone(driverAxis))
+    if (Robot.driveTrain.getDeadzone(driverAxis))
       driverAxis = 0;
     Robot.driveTrain.setLeftMotorSpeed(-driverAxis2 + driverAxis, 0);
     Robot.driveTrain.setRightMotorSpeed(driverAxis2 + driverAxis, 0);
