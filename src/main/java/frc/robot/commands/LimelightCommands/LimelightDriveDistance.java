@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.DriveTrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -32,7 +31,7 @@ public class LimelightDriveDistance extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         RobotMap.TARGET_DISTANCE,
         // This uses the output
-        output -> DriveTrain.driveAll(output)
+        output -> Robot.driveTrain.driveAll(output)
           // Use the output here
         );
     // Use addRequirements() here to declare subsystem dependencies.

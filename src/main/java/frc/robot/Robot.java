@@ -13,18 +13,20 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Mechanisms.ElevatorUp;
 import frc.robot.commands.Mechanisms.IntakeInOut;
 import frc.robot.commands.Mechanisms.Spinner;
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
 import frc.robot.commands.Shooter.ShooterSpeed;
+import frc.robot.commands.Autonomous.AutoCenter;
+import frc.robot.commands.Autonomous.AutoLeftOrRight;
 import frc.robot.commands.Driving.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,18 +50,19 @@ public class Robot extends TimedRobot {
   Command spinner = new Spinner();
   ElevatorUp elevatorUp = new ElevatorUp();
   IntakeInOut intakeInOut = new IntakeInOut();
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-
-
+  ShooterSpeed shooterSpeed = new ShooterSpeed();
+  SequentialCommandGroup m_autonomousCommand;
+  SendableChooser<SequentialCommandGroup> m_chooser = new SendableChooser<>();
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
     oi = new OI();
+
+    m_chooser.addOption("center", new AutoCenter());
+    m_chooser.addOption("left or right", new AutoLeftOrRight());
     
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -125,7 +128,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+      m_autonomousCommand.schedule();
     }
   }
 
@@ -134,7 +137,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -163,8 +166,6 @@ public class Robot extends TimedRobot {
     elevatorUp.schedule();
     shooterSpeed.schedule();
     intakeInOut.schedule();
-
-    // TODO: Intake
   }
 
   /**
