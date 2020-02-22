@@ -34,7 +34,6 @@ public class RobotMap {
   // Mechanism Controller Port
   public static final int ROBOT_MECHANISM_CONTROLLER = 1;
 
-
   // spinner motor port
   public static final int SPINNER_MOTOR = 3;
 
@@ -86,6 +85,16 @@ public class RobotMap {
   
   // Intake motor speed
   public static final double INTAKE_SPEED = .4;
+
+  // Autonomous center
+  public static final double AUTONOMOUS_CENTER_DRIVE_TIME = 1;
+  public static final double AUTONOMOUS_CENTER_DRIVE_SPEED = .3;
+  public static final int AUTONOMOUS_CENTER_TURN_TIME = 3;
+
+  // Autonomous right or left
+  public static final double AUTONOMOUS_POSITION_DRIVE_TIME = .5;
+  public static final double AUTONOMOUS_POSITION_DRIVE_SPEED = .3;
+  public static final int AUTONOMOUS_POSITION_TURN_TIME = 3;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

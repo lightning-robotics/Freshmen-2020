@@ -12,16 +12,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import frc.robot.commands.Mechanisms.ElevatorUp;
 import frc.robot.commands.Mechanisms.IntakeInOut;
 import frc.robot.commands.Mechanisms.Spinner;
+
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
 import frc.robot.commands.Shooter.ShooterSpeed;
-import frc.robot.commands.Autonomous.AutoCenter;
-import frc.robot.commands.Autonomous.AutoLeftOrRight;
+
+import frc.robot.commands.Autonomous.AutonomousRunner;
+
 import frc.robot.commands.Driving.TankDrive;
+
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -60,8 +65,16 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
 
-    m_chooser.addOption("center", new AutoCenter());
-    m_chooser.addOption("left or right", new AutoLeftOrRight());
+    m_chooser.addOption("center", new AutonomousRunner(
+      RobotMap.AUTONOMOUS_CENTER_DRIVE_SPEED, 
+      RobotMap.AUTONOMOUS_CENTER_DRIVE_TIME, 
+      RobotMap.AUTONOMOUS_CENTER_TURN_TIME
+      ));
+    m_chooser.addOption("left or right", new AutonomousRunner(
+      RobotMap.AUTONOMOUS_POSITION_DRIVE_SPEED,
+      RobotMap.AUTONOMOUS_POSITION_DRIVE_TIME,
+      RobotMap.AUTONOMOUS_CENTER_TURN_TIME
+    ));
     
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
