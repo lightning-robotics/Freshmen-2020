@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   public static final Intake intake = new Intake();
 
   Command tankDrive = new TankDrive();
-  Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  ShooterGoalOfTheDay shooterGoalOfTheDay = new ShooterGoalOfTheDay();
   Command spinner = new Spinner();
   ElevatorUp elevatorUp = new ElevatorUp();
   IntakeInOut intakeInOut = new IntakeInOut();

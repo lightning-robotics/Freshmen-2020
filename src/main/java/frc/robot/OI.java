@@ -36,7 +36,7 @@ public class OI {
     testButton.whenPressed(new TestCommand().withTimeout(3));
 
     JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
-    elevatorButton.whenPressed(new ElevatorPullSelfUp());
+    elevatorButton.whenPressed(new ElevatorPullSelfUp(RobotMap.ELEVATOR_DISTANCE));
     System.out.println("Buttons configured");
   }
 

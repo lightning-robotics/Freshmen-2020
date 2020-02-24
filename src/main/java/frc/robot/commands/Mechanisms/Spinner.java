@@ -37,7 +37,6 @@ public class Spinner extends Command {
   @Override
   public void execute() {
 
-    // TODO: Talk about changes and improvements
     if (Robot.oi.driver.getBButton()) { // remove later just for testing
       isOn = true;
     }
