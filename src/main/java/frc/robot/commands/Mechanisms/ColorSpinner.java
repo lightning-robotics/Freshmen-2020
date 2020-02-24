@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class Spinner extends Command {
-  public Spinner() {
+public class ColorSpinner extends Command {
+  public ColorSpinner() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -44,10 +44,10 @@ public class Spinner extends Command {
     if (isOn) {
 
       spinner.set(ControlMode.PercentOutput, -0.40);
-      Timer.delay(6.154); // 4.7 upper limit 4.63 lowwer limit at 40%
+      Timer.delay(6.154 * (1/24)); // 4.7 upper limit 4.63 lowwer limit at 40%
       // slow at 20% is 15 lots less error
       spinner.set(ControlMode.PercentOutput, .20);
-      Timer.delay(0.245);
+      Timer.delay(0.245 * (1/24));
 
       // spinner.set(ControlMode.PercentOutput, -0.80);
       // Timer.delay(2.2);

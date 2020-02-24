@@ -7,39 +7,58 @@
 
 package frc.robot.commands.Mechanisms;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ElevatorPullSelfUp extends PIDCommand {
+public class ElevatorPullSelfUp extends CommandBase {
+  private boolean done = false;
+  private int targetRotation;
   /**
    * Creates a new ElevatorPullSelfUp.
    */
-  // TODO: write PID to pull elevator to certain height and maintain position
-  public ElevatorPullSelfUp() {
-    super(
-        // The controller that the command will use
-        new PIDController(RobotMap.kPElevator, RobotMap.kIElevator, RobotMap.kDElevator),
-        // This should return the measurement
-        Robot.elevator::getCombinedDistance,
-        // This should return the setpoint (can also be a constant)
-        RobotMap.ELEVATOR_TARGET_HEIGHT,
-        // This uses the output
-        output -> {
-          // Use the output here
-          Robot.elevator.setPower(output);
-        });
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
+  public ElevatorPullSelfUp(int targetRotation) {
+    // Use addRequirements() here to declare subsystem dependencies
+    this.targetRotation = targetRotation;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    // sets the elevator to zero power at the beginning
+    Robot.elevator.setPower(0);
+    // For later use, sets the elevator's PID 
+    Robot.elevator.setPID(
+      RobotMap.ELEVATOR_F, 
+      RobotMap.ELEVATOR_P, 
+      RobotMap.ELEVATOR_I, 
+      RobotMap.ELEVATOR_D
+      );
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+
+    // runs the PID from the elevator subsystem
+    Robot.elevator.runPID(targetRotation);
+
+    // checks if the pid has finished
+    if (Robot.elevator.donePID()) done = true;
+    // stops the program if the robot is done
+    isFinished();
+
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    initialize();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return done;
   }
 }

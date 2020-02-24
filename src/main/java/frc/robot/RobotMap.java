@@ -31,6 +31,9 @@ public class RobotMap {
   public static final int ROBOT_DRIVE_XAXIS = 0;
   public static final int ROBOT_DRIVE_XAXIS_2 = 4;
 
+  // Elevator wheel diameter
+  public static final double ELEVEATOR_WHEEL_DIAMETER = 4;
+
   // Mechanism Controller Port
   public static final int ROBOT_MECHANISM_CONTROLLER = 1;
 
@@ -47,12 +50,18 @@ public class RobotMap {
 
   // elevator motor port
   public static final int ELEVATOR_RIGHT = 1;
-  public static final int ELEVATOR_RIGHT_ENCODER_A = 0;
-  public static final int ELEVATOR_RIGHT_ENCODER_B = 1;
   public static final int ELEVATOR_LEFT = 2;
-  public static final int ELEVATOR_LEFT_ENCODER_A = 0;
-  public static final int ELEVATOR_LEFT_ENCODER_B = 1;
-  public static final double DISTANCE_PER_PLUSE = 4 * Math.PI;
+  public static final double ELEVATOR_F = .01;
+  public static final double ELEVATOR_P = .03;
+  public static final double ELEVATOR_I = .001;
+  public static final double ELEVATOR_D = 0.0; 
+  public static final int ELEVATOR_ALLOWABLE_ERROR = 20;
+  public static final double ELEVATOR_PEAK_OUTPUT = .7;
+  public static final double ELEVATOR_MIN_OUTPUT = 0;
+  public static final int ELEVATOR_UPDATE_TIME = 30;
+  public static final int ELEVATOR_PIDX = 0;
+  public static final double DISTANCE_PER_PLUSE = ELEVEATOR_WHEEL_DIAMETER * Math.PI;
+  public static final int ELEVATOR_DISTANCE = 4096 * 2;
 
   // PID variables for elevator height
   public static final double ELEVATOR_TARGET_HEIGHT = -10;
