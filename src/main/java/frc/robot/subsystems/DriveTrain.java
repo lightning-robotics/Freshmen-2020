@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -40,6 +41,39 @@ public class DriveTrain extends Subsystem {
     backLeftMotor.setNeutralMode(NeutralMode.Brake);
     frontRightMotor.setNeutralMode(NeutralMode.Brake);
     backRightMotor.setNeutralMode(NeutralMode.Brake);
+
+    // create robotmap values for this
+    frontLeftMotor.configSelectedFeedbackSensor(
+      FeedbackDevice.CTRE_MagEncoder_Relative, 
+      // place pid id number 0 - 1,
+      0,
+      // place time desired for pid to update 30 ms
+      30
+      );
+    // do the same for the front right motor
+
+    // this creates a minumum output for the PID
+    frontLeftMotor.configNominalOutputForward(
+      0, // sets the minumum power to zero
+      30 // sets the update time to 30
+      );
+    // for the reverse of the motors
+    frontLeftMotor.configNominalOutputReverse(
+      0, // sets the minumum speed to 0
+      30 // sts the update time to 30
+      );
+    // TODO: set up the peak output for going forward and backwards
+    // do this for both front left and right
+
+    // TODO: set up minimum speed of the front right motor
+
+    frontLeftMotor.configAllowableClosedloopError(
+      0, // pid id 
+      0, // allowable error (in this case, 0 ticks)
+      30 // update time (30 ms)
+      );
+    // TODO: configure allowable error for front right motor
+
   }
 
   public void setRightMotorSpeed(double speedY, double speedX) {
@@ -98,6 +132,54 @@ public class DriveTrain extends Subsystem {
 
   public boolean getDeadzone(double speed) {
     return Math.abs(speed) < RobotMap.DEADZONE;
+  }
+
+  // TODO: set up the PID for driving a distance
+  /**
+   * give an explanation of what this does 
+   * Research may be required
+   * @param F fill these out
+   * @param P
+   * @param I
+   * @param D
+   */
+  public void setPID(double F, double P, double I, double D) {
+    // example
+    frontLeftMotor.config_kF(
+      0, // the pid id
+      F // the feed forward value
+      );
+    // TODO: do this for both front left AND right motors
+  }
+
+  // this one isn't super complicated, but I'll give you this one
+  public void updatePID() {
+    // gets the tick value of the encoders 
+    // this can be from 0 - 4096 (one full rotation)
+    int leftRelativePosition = frontLeftMotor.getSensorCollection().getPulseWidthPosition();
+    int rightRelativePosition = frontRightMotor.getSensorCollection().getPulseWidthPosition();
+    // updates the motors with this value
+    frontLeftMotor.setSelectedSensorPosition(leftRelativePosition);
+    frontRightMotor.setSelectedSensorPosition(rightRelativePosition);
+  }
+
+  /**
+   * This will set the distance that we want the 
+   * @param target the distance away (in ticks)
+   */
+  public void runPID(int target) {
+    updatePID();
+    // TODO: set the motors to activate the position PID
+    // HINT: this will need the set method and the ControlMode.Position
+  }
+
+  /**
+   * Checks if the pid is finished
+   * @return whether the pid is still running or not
+   */
+  public boolean finishedPID() {
+    return frontLeftMotor.getClosedLoopError() == 0 &&
+      frontRightMotor.getClosedLoopError() == 0;
   }
   
 }

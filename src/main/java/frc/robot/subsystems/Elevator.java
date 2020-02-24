@@ -27,7 +27,11 @@ public class Elevator extends SubsystemBase {
     // inverts the left elevator motor to go up
     elevatorLeft.setInverted(true);
     // sets up the magnetic encoder for later use
-    elevatorLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+    elevatorLeft.configSelectedFeedbackSensor(
+      FeedbackDevice.CTRE_MagEncoder_Relative, 
+      RobotMap.ELEVATOR_PIDX,
+      RobotMap.ELEVATOR_UPDATE_TIME
+      );
     // has the right motor follow the left since we want the motors
     // to be similar in speed
     elevatorRight.follow(elevatorLeft);

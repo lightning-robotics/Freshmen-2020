@@ -33,7 +33,7 @@ public class OI {
 
     // pratice command to ensure that configuring buttons is working
     JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
-    testButton.whenPressed(new TestCommand().withTimeout(3));
+    testButton.whenPressed(new TestCommand(3 * 4096).withTimeout(3));
 
     JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
     elevatorButton.whenPressed(new ElevatorPullSelfUp(RobotMap.ELEVATOR_DISTANCE));
