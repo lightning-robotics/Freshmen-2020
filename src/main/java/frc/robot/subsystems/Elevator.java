@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,9 +21,9 @@ public class Elevator extends SubsystemBase {
     private TalonSRX elevatorRight = new TalonSRX(RobotMap.ELEVATOR_RIGHT);
     private TalonSRX elevatorLeft = new TalonSRX(RobotMap.ELEVATOR_LEFT);
   
-    // initializing the encoders
-    private Encoder encoderRight = new Encoder(RobotMap.ELEVATOR_RIGHT_ENCODER_A, RobotMap.ELEVATOR_RIGHT_ENCODER_B);
-    private Encoder encoderLeft = new Encoder(RobotMap.ELEVATOR_LEFT_ENCODER_A, RobotMap.ELEVATOR_LEFT_ENCODER_B);
+    // // initializing the encoders
+    // private Encoder encoderRight = new Encoder(RobotMap.ELEVATOR_RIGHT_ENCODER_A, RobotMap.ELEVATOR_RIGHT_ENCODER_B);
+    // private Encoder encoderLeft = new Encoder(RobotMap.ELEVATOR_LEFT_ENCODER_A, RobotMap.ELEVATOR_LEFT_ENCODER_B);
 
     // resetting the encoders at the start of the PID
     private static boolean resetValue = true;
@@ -32,8 +33,10 @@ public class Elevator extends SubsystemBase {
    */
   public Elevator() {
     elevatorLeft.setInverted(true);
-    encoderLeft.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
-    encoderRight.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
+    elevatorLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    elevatorLeft.
+    // encoderLeft.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
+    // encoderRight.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
   }
 
   @Override
@@ -46,21 +49,21 @@ public class Elevator extends SubsystemBase {
     elevatorRight.set(ControlMode.PercentOutput, power);
   }
 
-  public double getLeftDistance() {
-    return encoderLeft.getDistance();
-  }
+  // public double getLeftDistance() {
+  //   return encoderLeft.getDistance();
+  // }
   
-  public double getRightDistance() {
-    return encoderRight.getDistance();
-  }
+  // public double getRightDistance() {
+  //   return encoderRight.getDistance();
+  // }
 
-  // ensure that we don't put too much power on a slow motor
-  public double getCombinedDistance() {
-    if (resetValue) {
-      encoderLeft.reset();
-      encoderRight.reset();
-      resetValue = false;
-    }
-    return Math.min(getLeftDistance(), getRightDistance());
-  }
+  // // ensure that we don't put too much power on a slow motor
+  // public double getCombinedDistance() {
+  //   if (resetValue) {
+  //     encoderLeft.reset();
+  //     encoderRight.reset();
+  //     resetValue = false;
+  //   }
+  //   return Math.min(getLeftDistance(), getRightDistance());
+  // }
 }
