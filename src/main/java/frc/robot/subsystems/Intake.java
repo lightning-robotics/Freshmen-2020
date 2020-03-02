@@ -14,13 +14,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
-  private TalonSRX leftMotor = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR);
-  private TalonSRX rightMotor = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR);
+  private static TalonSRX leftMotor = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR);
+  private static TalonSRX rightMotor = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR);
   /**
    * Creates a new Intake.
    */
   public Intake() {
-    leftMotor.setInverted(true);
+    System.out.println("Created");
+    // setLeftInverted();
   }
 
   @Override
@@ -28,8 +29,16 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  // private static void setLeftInverted() {
+  //   leftMotor.setInverted(true);
+  // }
+
   public void setSpeed(double speed) {
-    leftMotor.set(ControlMode.PercentOutput, speed);
+    leftMotor.set(ControlMode.PercentOutput, -speed);
     rightMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setleftMotor(double speed) {
+    leftMotor.set(ControlMode.PercentOutput, -speed);
   }
 }

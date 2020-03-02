@@ -21,8 +21,8 @@ public class driveMecanum extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveTrain.setLeftMotorSpeed(0, 0);
-    Robot.driveTrain.setRightMotorSpeed(0, 0);
+    Robot.driveTrain.setLeftMotorSpeed(0);
+    Robot.driveTrain.setRightMotorSpeed(0);
     // drive.setSafetyEnabled(false);
   }
 
@@ -35,14 +35,14 @@ public class driveMecanum extends Command {
     // turn right
     if (Robot.oi.driver.getTriggerAxis(Hand.kRight) > RobotMap.TRIGGER_DEADZONE) {
       double value = Robot.oi.driver.getTriggerAxis(Hand.kRight) / 2.0;
-      Robot.driveTrain.setLeftMotorSpeed(value * -1, 0);
-      Robot.driveTrain.setRightMotorSpeed(value, 0);
+      Robot.driveTrain.setLeftMotorSpeed(value * -1);
+      Robot.driveTrain.setRightMotorSpeed(value);
     } 
     // turn left
     else if (Robot.oi.driver.getTriggerAxis(Hand.kLeft) > RobotMap.TRIGGER_DEADZONE) {
       double value = Robot.oi.driver.getTriggerAxis(Hand.kLeft) / 2.0;
-      Robot.driveTrain.setLeftMotorSpeed(value, 0);
-      Robot.driveTrain.setRightMotorSpeed(value * -1, 0);
+      Robot.driveTrain.setLeftMotorSpeed(value);
+      Robot.driveTrain.setRightMotorSpeed(value * -1);
     }
     // drive forward right
     else if (driverAxisL < -1*RobotMap.DEADZONE && Robot.oi.driver.getBumper(Hand.kRight)) {
@@ -82,8 +82,8 @@ public class driveMecanum extends Command {
     } 
     else {
       // turn off everything. don't kill me please :+)
-      Robot.driveTrain.setLeftMotorSpeed(0, 0);
-      Robot.driveTrain.setRightMotorSpeed(0, 0);
+      Robot.driveTrain.setLeftMotorSpeed(0);
+      Robot.driveTrain.setRightMotorSpeed(0);
     }
   }
 

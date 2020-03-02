@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +21,6 @@ public class DriveTrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-
   // Declartion of driver motors (hi)
   public static final TalonSRX frontRightMotor = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
   public static final TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
@@ -33,101 +31,88 @@ public class DriveTrain extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // // setDefaultCommand(new MySpecialCommand());
-//switch later
-    backLeftMotor.setInverted(true);
-    frontLeftMotor.setInverted(true);
-
-    frontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    backLeftMotor.setNeutralMode(NeutralMode.Brake);
-    frontRightMotor.setNeutralMode(NeutralMode.Brake);
-    backRightMotor.setNeutralMode(NeutralMode.Brake);
 
     // create robotmap values for this
-    frontLeftMotor.configSelectedFeedbackSensor(
-      FeedbackDevice.CTRE_MagEncoder_Relative, 
-      // place pid id number 0 - 1,
-      0,
-      // place time desired for pid to update 30 ms
-      30
-      );
+    frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+        // place pid id number 0 - 1,
+        0,
+        // place time desired for pid to update 30 ms
+        30);
     // do the same for the front right motor
+    frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+    0, 30);
 
     // this creates a minumum output for the PID
-    frontLeftMotor.configNominalOutputForward(
-      0, // sets the minumum power to zero
-      30 // sets the update time to 30
-      );
+    frontLeftMotor.configNominalOutputForward(0, // sets the minumum power to zero
+        30 // sets the update time to 30
+    );
     // for the reverse of the motors
-    frontLeftMotor.configNominalOutputReverse(
-      0, // sets the minumum speed to 0
-      30 // sts the update time to 30
-      );
+    frontLeftMotor.configNominalOutputReverse(0, // sets the minumum speed to 0
+        30 // sts the update time to 30
+    );
     // TODO: set up the peak output for going forward and backwards
     // do this for both front left and right
+    frontLeftMotor.configClosedLoopPeakOutput(0, .70, 30);
+    frontRightMotor.configClosedLoopPeakOutput(0, 0.70, 30);
 
     // TODO: set up minimum speed of the front right motor
+    frontRightMotor.configNominalOutputReverse(0, 30);
+    frontRightMotor.configNominalOutputForward(0, 30);
 
-    frontLeftMotor.configAllowableClosedloopError(
-      0, // pid id 
-      0, // allowable error (in this case, 0 ticks)
-      30 // update time (30 ms)
-      );
+    frontLeftMotor.configAllowableClosedloopError(0, // pid id
+        0, // allowable error (in this case, 0 ticks)
+        30 // update time (30 ms)
+    );
     // TODO: configure allowable error for front right motor
-
+    frontRightMotor.configAllowableClosedloopError(0, 0, 30);
+    frontLeftMotor.configAllowableClosedloopError(0, 0, 30);
   }
 
-  public void setRightMotorSpeed(double speedY, double speedX) {
-    if (getDeadzone(speedY)) {
-      speedY = 0;
-    }
-    if (getDeadzone(speedX)) {
-      speedX = 0;
-    } 
-    
-      frontRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
-      // backRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
+  public void setRightMotorSpeed(double speed) {
+    if (getDeadzone(speed)) 
+      speed = 0;
+    frontRightMotor.set(ControlMode.PercentOutput, speed);
+    // backRightMotor.set(ControlMode.PercentOutput, speedY + speedX);
   }
 
-  public void setLeftMotorSpeed(double speedY, double speedX) {
-    if (getDeadzone(speedY)) {
-      speedY = 0;
-    }
-    if (getDeadzone(speedX)) {
-      speedX = 0;
-    }
-    frontLeftMotor.set(ControlMode.PercentOutput, speedY + speedX);
+  public void setLeftMotorSpeed(double speed) {
+    if (getDeadzone(speed)) 
+      speed = 0;
+    frontLeftMotor.set(ControlMode.PercentOutput, speed);
     // backLeftMotor.set(ControlMode.PercentOutput, speedY + speedX);
   }
 
   public void FLMset(double speed) {
-    if (getDeadzone(speed)) speed = 0;
+    if (getDeadzone(speed))
+      speed = 0;
 
     frontLeftMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void FRMset(double speed) {
-    if (getDeadzone(speed)) speed = 0;
+    if (getDeadzone(speed))
+      speed = 0;
 
     frontRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void BLMset(double speed) {
-    if (getDeadzone(speed)) speed = 0;
-  
+    if (getDeadzone(speed))
+      speed = 0;
+
     backLeftMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void BRMset(double speed) {
-    if (getDeadzone(speed)) speed = 0;
+    if (getDeadzone(speed))
+      speed = 0;
 
     backRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void driveAll(double speed) {
     frontLeftMotor.set(ControlMode.PercentOutput, speed);
-    backLeftMotor.set(ControlMode.PercentOutput, speed);
     frontRightMotor.set(ControlMode.PercentOutput, speed);
-    backLeftMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean getDeadzone(double speed) {
@@ -136,8 +121,8 @@ public class DriveTrain extends Subsystem {
 
   // TODO: set up the PID for driving a distance
   /**
-   * give an explanation of what this does 
-   * Research may be required
+   * give an explanation of what this does Research may be required
+   * 
    * @param F fill these out
    * @param P
    * @param I
@@ -145,16 +130,23 @@ public class DriveTrain extends Subsystem {
    */
   public void setPID(double F, double P, double I, double D) {
     // example
-    frontLeftMotor.config_kF(
-      0, // the pid id
-      F // the feed forward value
-      );
+    frontLeftMotor.config_kF(0, // the pid id
+        F// the feed forward value
+    );
+    frontLeftMotor.config_kP(0, P);
+    frontLeftMotor.config_kI(0, I);
+    frontLeftMotor.config_kD(0, D);
+
+    frontRightMotor.config_kF(0, F);
+    frontRightMotor.config_kP(0, P);
+    frontRightMotor.config_kI(0, I);
+    frontRightMotor.config_kD(0, D);
     // TODO: do this for both front left AND right motors
   }
 
   // this one isn't super complicated, but I'll give you this one
   public void updatePID() {
-    // gets the tick value of the encoders 
+    // gets the tick value of the encoders
     // this can be from 0 - 4096 (one full rotation)
     int leftRelativePosition = frontLeftMotor.getSensorCollection().getPulseWidthPosition();
     int rightRelativePosition = frontRightMotor.getSensorCollection().getPulseWidthPosition();
@@ -164,22 +156,25 @@ public class DriveTrain extends Subsystem {
   }
 
   /**
-   * This will set the distance that we want the 
-   * @param target the distance away (in ticks)
+   * This will set the distance that we want the
+   * 
+   * @param distance the distance away (in ticks)
    */
-  public void runPID(int target) {
+  public void runPID(double distance) {
     updatePID();
+    frontLeftMotor.set(ControlMode.Position, distance);
+    frontRightMotor.set(ControlMode.Position, distance);
     // TODO: set the motors to activate the position PID
     // HINT: this will need the set method and the ControlMode.Position
   }
 
   /**
    * Checks if the pid is finished
+   * 
    * @return whether the pid is still running or not
    */
   public boolean finishedPID() {
-    return frontLeftMotor.getClosedLoopError() == 0 &&
-      frontRightMotor.getClosedLoopError() == 0;
+    return frontLeftMotor.getClosedLoopError() == 0 && frontRightMotor.getClosedLoopError() == 0;
   }
-  
+
 }

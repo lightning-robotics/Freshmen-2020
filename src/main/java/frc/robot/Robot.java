@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -82,6 +84,14 @@ public class Robot extends TimedRobot {
     // set the back motors to follow the front
     DriveTrain.backLeftMotor.follow(DriveTrain.frontLeftMotor);
     DriveTrain.backRightMotor.follow(DriveTrain.frontRightMotor);
+
+    DriveTrain.backLeftMotor.setInverted(true);
+    DriveTrain.frontLeftMotor.setInverted(true);
+
+    DriveTrain.frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    DriveTrain.backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    DriveTrain.frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    DriveTrain.backRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   /**

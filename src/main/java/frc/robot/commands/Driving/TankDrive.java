@@ -20,8 +20,8 @@ public class TankDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveTrain.setLeftMotorSpeed(0, 0);
-    Robot.driveTrain.setRightMotorSpeed(0, 0);
+    Robot.driveTrain.setLeftMotorSpeed(0);
+    Robot.driveTrain.setRightMotorSpeed(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -30,7 +30,7 @@ public class TankDrive extends Command {
     double driverAxis = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS);
     double driverAxis2 = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS);
 
-    double varSpeed = 0.70;
+    double varSpeed = 0.30;
 
     driverAxis = Math.min(Math.abs(driverAxis), varSpeed) * (driverAxis/Math.abs(driverAxis));
     
@@ -40,8 +40,9 @@ public class TankDrive extends Command {
       driverAxis2 = 0;
     if (Robot.driveTrain.getDeadzone(driverAxis))
       driverAxis = 0;
-    Robot.driveTrain.setLeftMotorSpeed(-driverAxis2 + driverAxis, 0);
-    Robot.driveTrain.setRightMotorSpeed(driverAxis2 + driverAxis, 0);
+      
+    Robot.driveTrain.setLeftMotorSpeed(driverAxis2 + driverAxis);
+    Robot.driveTrain.setRightMotorSpeed(driverAxis2 + driverAxis);
     // System.out.println("Driving backward");
     // System.out.println("Driving forward");
 

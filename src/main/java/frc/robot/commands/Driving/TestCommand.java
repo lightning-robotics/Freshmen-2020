@@ -41,6 +41,7 @@ public class TestCommand extends CommandBase {
     
     // TODO: run the pid here from the drive train subsystem
     // don't forget the distance
+    Robot.driveTrain.runPID(-distance);
 
   }
 
