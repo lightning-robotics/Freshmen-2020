@@ -15,10 +15,10 @@ package frc.robot;
  */
 public class RobotMap {
   // Motor Port Number
-  public static final int FRONT_RIGHT_MOTOR = 1;
-  public static final int BACK_RIGHT_MOTOR = 5;
-  public static final int FRONT_LEFT_MOTOR = 12;
-  public static final int BACK_LEFT_MOTOR = 6;
+  public static final int FRONT_RIGHT_MOTOR = 20;
+  public static final int BACK_RIGHT_MOTOR = 21;
+  public static final int FRONT_LEFT_MOTOR = 22;
+  public static final int BACK_LEFT_MOTOR = 23;
 
   //  public static final int FRONT_RIGHT_MOTOR = 3;
   //  public static final int BACK_RIGHT_MOTOR = 2;
@@ -38,7 +38,7 @@ public class RobotMap {
   public static final int ROBOT_MECHANISM_CONTROLLER = 1;
 
   // spinner motor port
-  public static final int SPINNER_MOTOR = 3;
+  public static final int SPINNER_MOTOR = 24;
 
   // shooter motor ports
   public static final int SHOOTER_TOP = 2;
@@ -49,8 +49,7 @@ public class RobotMap {
   public static final double TRIGGER_DEADZONE = 0.1;
 
   // elevator motor port
-  public static final int ELEVATOR_RIGHT = 1;
-  public static final int ELEVATOR_LEFT = 2;
+  public static final int ELEVATOR_MOTOR = 25;
   public static final double ELEVATOR_F = .01;
   public static final double ELEVATOR_P = .03;
   public static final double ELEVATOR_I = .001;
@@ -89,11 +88,11 @@ public class RobotMap {
   public static final double TARGET_ANGLE = 0;
 
   // Intake motor ports
-  public static final int LEFT_INTAKE_MOTOR = 0;
-  public static final int RIGHT_INTAKE_MOTOR = 1;
+  public static final int LEFT_INTAKE_MOTOR = 6;
+  public static final int RIGHT_INTAKE_MOTOR = 3;
   
   // Intake motor speed
-  public static final double INTAKE_SPEED = .4;
+  public static final double INTAKE_SPEED = .30;
 
   // Autonomous center
   public static final double AUTONOMOUS_CENTER_DRIVE_TIME = 1;
