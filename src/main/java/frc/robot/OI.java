@@ -29,14 +29,15 @@ public class OI {
 
     // turn to face target button
     JoystickButton turnButton = new JoystickButton(driver, Button.kA.value);
-    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(0.5));   //change!! testing only do like 3 or something
+    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(1));   //change!! testing only do like 3 or something
 
-    // pratice command to ensure that configuring buttons is working
-    JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
-    testButton.whenPressed(new TestCommand(3 * 4096).withTimeout(3));
+    // // pratice command to ensure that configuring buttons is working
+    // JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
+    // testButton.whenPressed(new TestCommand(3 * 4096).withTimeout(3));
 
+    // gets elevator to certain height
     JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
-    elevatorButton.whenPressed(new ElevatorPullSelfUp(RobotMap.ELEVATOR_DISTANCE));
+    elevatorButton.whenPressed(new ElevatorPullSelfUp());
     System.out.println("Buttons configured");
   }
 

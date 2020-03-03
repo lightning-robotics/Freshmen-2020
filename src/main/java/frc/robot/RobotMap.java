@@ -15,6 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
   // Motor Port Number
+  // TODO: put right motor numbers
   public static final int FRONT_RIGHT_MOTOR = 20;
   public static final int BACK_RIGHT_MOTOR = 21;
   public static final int FRONT_LEFT_MOTOR = 22;
@@ -38,18 +39,21 @@ public class RobotMap {
   public static final int ROBOT_MECHANISM_CONTROLLER = 1;
 
   // spinner motor port
+  // TODO: put right motor ports
   public static final int SPINNER_MOTOR = 24;
 
   // shooter motor ports
-  public static final int SHOOTER_TOP = 2;
-  public static final int SHOOTER_BOTTOM = 3;
+  // TODO: put right motor ports
+  public static final int SHOOTER_TOP = 25;
+  public static final int SHOOTER_BOTTOM = 26;
 
   // dead zone
   public static final double DEADZONE = 0.3; //why not
   public static final double TRIGGER_DEADZONE = 0.1;
 
   // elevator motor port
-  public static final int ELEVATOR_MOTOR = 25;
+  // TODO: put right motor ports
+  public static final int ELEVATOR_MOTOR = 27;
   public static final double ELEVATOR_F = .01;
   public static final double ELEVATOR_P = .03;
   public static final double ELEVATOR_I = .001;
@@ -60,7 +64,6 @@ public class RobotMap {
   public static final int ELEVATOR_UPDATE_TIME = 30;
   public static final int ELEVATOR_PIDX = 0;
   public static final double DISTANCE_PER_PLUSE = ELEVEATOR_WHEEL_DIAMETER * Math.PI;
-  public static final int ELEVATOR_DISTANCE = 4096 * 2;
 
   // PID variables for elevator height
   public static final double ELEVATOR_TARGET_HEIGHT = -10;
@@ -88,8 +91,9 @@ public class RobotMap {
   public static final double TARGET_ANGLE = 0;
 
   // Intake motor ports
-  public static final int LEFT_INTAKE_MOTOR = 6;
-  public static final int RIGHT_INTAKE_MOTOR = 3;
+  // TODO: put right motor ports
+  public static final int LEFT_INTAKE_MOTOR = 28;
+  public static final int RIGHT_INTAKE_MOTOR = 29;
   
   // Intake motor speed
   public static final double INTAKE_SPEED = .30;
@@ -103,6 +107,10 @@ public class RobotMap {
   public static final double AUTONOMOUS_POSITION_DRIVE_TIME = .5;
   public static final double AUTONOMOUS_POSITION_DRIVE_SPEED = .3;
   public static final int AUTONOMOUS_POSITION_TURN_TIME = 3;
+
+  // Autonomous turn speed
+  public static final double AUTONOMOUS_TURN_FOR_TIME = .5;
+  public static final double AUTONOMOUS_TURN_FOR_TIME_SPEED = .4;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

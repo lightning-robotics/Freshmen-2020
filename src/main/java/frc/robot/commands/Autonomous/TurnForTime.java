@@ -5,53 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Mechanisms;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ElevatorPullSelfUp extends CommandBase {
+public class TurnForTime extends CommandBase {
+  private double time;
+  private double speed;
+  private boolean done;
   /**
-   * Creates a new ElevatorPullSelfUp.
+   * Creates a new TurnForTime.
    */
-  public ElevatorPullSelfUp() {
+  public TurnForTime(double time, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.time = time;
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.elevator.setPower(0);
+    Robot.driveTrain.driveAll(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    Robot.elevator.setPower(.5);
-    Timer.delay(1.0/8);
-    upDown();
-    Timer.delay(1000000);
-
+    Robot.driveTrain.setRightMotorSpeed(speed);
+    Robot.driveTrain.setLeftMotorSpeed(-speed);
+    Timer.delay(time);
+    done = true;
+    isFinished();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.elevator.setPower(0.05);
+    initialize(); 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-  }
-
-  private void upDown() {
-    Robot.elevator.setPower(.2);
-    Timer.delay(.25);
-    Robot.elevator.setPower(-.15);
-    Timer.delay(.25);
+    return done;
   }
 }

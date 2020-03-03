@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,10 +23,10 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
 
   // Declartion of driver motors (hi)
-  public static final TalonSRX frontRightMotor = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
-  public static final TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
-  public static final TalonSRX frontLeftMotor = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
-  public static final TalonSRX backLeftMotor = new TalonSRX(RobotMap.BACK_LEFT_MOTOR);
+  private static final TalonSRX frontRightMotor = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
+  private static final TalonSRX backRightMotor = new TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
+  private static final TalonSRX frontLeftMotor = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
+  private static final TalonSRX backLeftMotor = new TalonSRX(RobotMap.BACK_LEFT_MOTOR);
 
   @Override
   public void initDefaultCommand() {
@@ -42,6 +43,18 @@ public class DriveTrain extends Subsystem {
     frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
     0, 30);
 
+      // set the back motors to follow the front
+      DriveTrain.backLeftMotor.follow(DriveTrain.frontLeftMotor);
+      DriveTrain.backRightMotor.follow(DriveTrain.frontRightMotor);
+  
+      DriveTrain.backLeftMotor.setInverted(true);
+      DriveTrain.frontLeftMotor.setInverted(true);
+  
+      DriveTrain.frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+      DriveTrain.backLeftMotor.setNeutralMode(NeutralMode.Brake);
+      DriveTrain.frontRightMotor.setNeutralMode(NeutralMode.Brake);
+      DriveTrain.backRightMotor.setNeutralMode(NeutralMode.Brake);
+
     // this creates a minumum output for the PID
     frontLeftMotor.configNominalOutputForward(0, // sets the minumum power to zero
         30 // sets the update time to 30
@@ -50,12 +63,10 @@ public class DriveTrain extends Subsystem {
     frontLeftMotor.configNominalOutputReverse(0, // sets the minumum speed to 0
         30 // sts the update time to 30
     );
-    // TODO: set up the peak output for going forward and backwards
-    // do this for both front left and right
+
     frontLeftMotor.configClosedLoopPeakOutput(0, .70, 30);
     frontRightMotor.configClosedLoopPeakOutput(0, 0.70, 30);
 
-    // TODO: set up minimum speed of the front right motor
     frontRightMotor.configNominalOutputReverse(0, 30);
     frontRightMotor.configNominalOutputForward(0, 30);
 
@@ -63,7 +74,6 @@ public class DriveTrain extends Subsystem {
         0, // allowable error (in this case, 0 ticks)
         30 // update time (30 ms)
     );
-    // TODO: configure allowable error for front right motor
     frontRightMotor.configAllowableClosedloopError(0, 0, 30);
     frontLeftMotor.configAllowableClosedloopError(0, 0, 30);
   }
@@ -119,7 +129,6 @@ public class DriveTrain extends Subsystem {
     return Math.abs(speed) < RobotMap.DEADZONE;
   }
 
-  // TODO: set up the PID for driving a distance
   /**
    * give an explanation of what this does Research may be required
    * 
@@ -141,7 +150,6 @@ public class DriveTrain extends Subsystem {
     frontRightMotor.config_kP(0, P);
     frontRightMotor.config_kI(0, I);
     frontRightMotor.config_kD(0, D);
-    // TODO: do this for both front left AND right motors
   }
 
   // this one isn't super complicated, but I'll give you this one
@@ -164,8 +172,6 @@ public class DriveTrain extends Subsystem {
     updatePID();
     frontLeftMotor.set(ControlMode.Position, distance);
     frontRightMotor.set(ControlMode.Position, distance);
-    // TODO: set the motors to activate the position PID
-    // HINT: this will need the set method and the ControlMode.Position
   }
 
   /**

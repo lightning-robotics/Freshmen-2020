@@ -9,7 +9,7 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.RobotMap;
 import frc.robot.commands.LimelightCommands.LimelightTurnToAngle;
 
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
@@ -24,6 +24,7 @@ public class AutonomousRunner extends SequentialCommandGroup {
   public AutonomousRunner(double driveSpeed, double driveTime, int turnTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(driveTime, driveSpeed), (Command) new LimelightTurnToAngle().withTimeout(turnTime), (Command) new ShooterGoalOfTheDay());
+    super((Command) new DriveForTime(driveTime, driveSpeed), (Command) new TurnForTime(RobotMap.AUTONOMOUS_TURN_FOR_TIME, RobotMap.AUTONOMOUS_TURN_FOR_TIME_SPEED),
+    (Command) new LimelightTurnToAngle().withTimeout(turnTime), (Command) new ShooterGoalOfTheDay());
   }
 }
