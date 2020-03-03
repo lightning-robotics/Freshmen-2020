@@ -7,11 +7,13 @@
 
 package frc.robot.commands.Driving;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class TankDrive extends Command {
+  double reverse = 1;
   public TankDrive() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveTrain);
@@ -27,13 +29,34 @@ public class TankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+    int buttonNum = 0;
+
     double driverAxis = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS);
     double driverAxis2 = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS);
 
     double varSpeed = 0.30;
 
+    if (Robot.oi.driver.getBumper(Hand.kLeft))
+      buttonNum += 1;
+    
+    switch (buttonNum) {
+      case 1:
+        break;
+      case 2:
+        reverse = -1;
+        break;
+      default:
+        buttonNum = 0;
+        reverse = 1;
+        break;
+    }
+
     driverAxis = Math.min(Math.abs(driverAxis), varSpeed) * (driverAxis/Math.abs(driverAxis));
     driverAxis2 = Math.min(Math.abs(driverAxis2), varSpeed) * (driverAxis2/Math.abs(driverAxis2));
+
+    driverAxis *= reverse;
+    driverAxis2 *= reverse;
 
     if (Robot.driveTrain.getDeadzone(driverAxis2)) 
       driverAxis2 = 0;
