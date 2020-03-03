@@ -26,7 +26,6 @@ public class TestCommand extends CommandBase {
   @Override
   public void initialize() {
     Robot.driveTrain.driveAll(0);
-    // TODO: Find good PID values for this
     Robot.driveTrain.setPID(
       .01, 
       .02, 
@@ -38,9 +37,6 @@ public class TestCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    // TODO: run the pid here from the drive train subsystem
-    // don't forget the distance
     Robot.driveTrain.runPID(-distance);
 
   }
