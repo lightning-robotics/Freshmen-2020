@@ -91,12 +91,11 @@ public class RobotMap {
   public static final double TARGET_ANGLE = 0;
 
   // Intake motor ports
-  // TODO: put right motor ports
-  public static final int LEFT_INTAKE_MOTOR = 28;
-  public static final int RIGHT_INTAKE_MOTOR = 29;
+  public static final int LEFT_INTAKE_MOTOR = 6;
+  public static final int RIGHT_INTAKE_MOTOR = 4;
   
   // Intake motor speed
-  public static final double INTAKE_SPEED = .30;
+  public static final double INTAKE_SPEED = .35;
 
   // Autonomous center
   public static final double AUTONOMOUS_CENTER_DRIVE_TIME = 1;
