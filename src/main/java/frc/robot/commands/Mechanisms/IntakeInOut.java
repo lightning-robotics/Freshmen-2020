@@ -29,7 +29,6 @@ public class IntakeInOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.intake.setleftMotor(.3);
     if (Robot.oi.driver.getBumper(Hand.kRight)) {
       Robot.intake.setSpeed(RobotMap.INTAKE_SPEED);
       System.out.println("setting speed");

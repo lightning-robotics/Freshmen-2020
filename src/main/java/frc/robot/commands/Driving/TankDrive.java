@@ -14,6 +14,7 @@ import frc.robot.RobotMap;
 
 public class TankDrive extends Command {
   double reverse = 1;
+  int buttonNum = 0;
   public TankDrive() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveTrain);
@@ -30,12 +31,10 @@ public class TankDrive extends Command {
   @Override
   protected void execute() {
 
-    int buttonNum = 0;
-
     double driverAxis = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_YAXIS);
     double driverAxis2 = Robot.oi.getControllerAxis(Robot.oi.driver, RobotMap.ROBOT_DRIVE_XAXIS);
 
-    double varSpeed = 0.30;
+    double varSpeed = 0.60;
 
     if (Robot.oi.driver.getBumper(Hand.kLeft))
       buttonNum += 1;
