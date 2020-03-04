@@ -52,7 +52,6 @@ public class TankDrive extends Command {
     }
 
     driverAxis = Math.min(Math.abs(driverAxis), varSpeed) * (driverAxis/Math.abs(driverAxis));
-    
     driverAxis2 = Math.min(Math.abs(driverAxis2), varSpeed) * (driverAxis2/Math.abs(driverAxis2));
 
     driverAxis *= reverse;
@@ -65,12 +64,6 @@ public class TankDrive extends Command {
       
     Robot.driveTrain.setLeftMotorSpeed(driverAxis2 + driverAxis);
     Robot.driveTrain.setRightMotorSpeed(driverAxis2 + driverAxis);
-    // System.out.println("Driving backward");
-    // System.out.println("Driving forward");
-
-    // Robot.driveTrain.setLeftMotorSpeed(driverAxis, driverAxis2);
-    // Robot.driveTrain.setRightMotorSpeed(driverAxis, driverAxis2);
-
   }
 
   // Make this return true when this Command no longer needs to run execute()

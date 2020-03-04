@@ -21,9 +21,7 @@ public class Intake extends SubsystemBase {
    */
   public Intake() {
     System.out.println("Created");
-    // rightMotor.follow(leftMotor);
-    // setLeftInverted();
-    rightMotor.set(ControlMode.PercentOutput, .3);  
+    leftMotor.setInverted(true);
   }
 
   @Override
@@ -31,13 +29,8 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  // private static void setLeftInverted() {
-  //   leftMotor.setInverted(true);
-  // }
-
   public void setSpeed(double speed) {
-    leftMotor.set(ControlMode.PercentOutput, -speed);
+    leftMotor.set(ControlMode.PercentOutput, speed);
     rightMotor.set(ControlMode.PercentOutput, speed);
   }
-
 }
