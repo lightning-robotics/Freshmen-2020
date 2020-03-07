@@ -11,9 +11,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -77,6 +78,8 @@ public class DriveTrain extends Subsystem {
     );
     frontRightMotor.configAllowableClosedloopError(0, 0, 30);
     frontLeftMotor.configAllowableClosedloopError(0, 0, 30);
+
+    // Robot.music.addMotor((TalonFX) frontRightMotor);
   }
 
   public void setRightMotorSpeed(double speed) {
