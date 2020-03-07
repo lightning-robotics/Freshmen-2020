@@ -7,43 +7,46 @@
 
 package frc.robot.commands.LimelightCommands;
 
-
-import edu.wpi.first.wpilibj.controller.PIDController;
-
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class LimelightDriveDistance extends PIDCommand {
+public class LimelightDriveDistance extends CommandBase {
   /**
    * Creates a new LimelightDriveDistance.
    */
   public LimelightDriveDistance() {
-    super(
-        // The controller that the command will use
-        new PIDController(RobotMap.kPDrive, RobotMap.kIDrive, RobotMap.kDDrive),
-        // This should return the measurement
-        Robot.limelight::getDistanceFrom,
-        // This should return the setpoint (can also be a constant)
-        RobotMap.TARGET_DISTANCE,
-        // This uses the output
-        output -> Robot.driveTrain.driveAll(output)
-          // Use the output here
-        );
     // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(RobotMap.DISTANCE_TOLERANCE);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+
+    Robot.driveTrain.setPID(RobotMap.kFDrive, RobotMap.kPDrive, RobotMap.kIDrive, RobotMap.kDDrive);
+
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+
+    double distanceInTicks = Robot.limelight.distanceInTicks(RobotMap.DRIVER_TICKS_PER_INCH);
+
+    Robot.driveTrain.runPID(distanceInTicks);
+
+    isFinished();
+
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return Robot.driveTrain.finishedPID();
   }
-
-
 }

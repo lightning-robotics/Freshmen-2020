@@ -174,7 +174,7 @@ public class Robot extends TimedRobot {
     // TODO: uncomment
     // spinner.start();
     // shooterGoalOfTheDay.start();
-    // elevatorUp.schedule();
+    elevatorUp.schedule();
     // shooterSpeed.schedule();
     intakeInOut.schedule();
   }

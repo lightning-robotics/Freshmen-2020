@@ -35,6 +35,12 @@ public class RobotMap {
   // Elevator wheel diameter
   public static final double ELEVEATOR_WHEEL_DIAMETER = 4;
 
+  // Shooter wheel diameter
+  public static final int SHOOTER_WHEEL_DIAMETER = 4;
+
+  // driver wheel diameter
+  public static final int DRIVE_WHEEL_DIAMETER = 6;
+
   // Mechanism Controller Port
   public static final int ROBOT_MECHANISM_CONTROLLER = 1;
 
@@ -47,6 +53,12 @@ public class RobotMap {
   public static final int SHOOTER_TOP = 25;
   public static final int SHOOTER_BOTTOM = 26;
 
+  // shooter distance per 4096 ticks
+  public static final double SHOOTER_TICKS_PER_INCH = 4096 / (Math.PI * SHOOTER_WHEEL_DIAMETER);
+
+  // drive distance per 4096 ticks
+  public static final double DRIVER_TICKS_PER_INCH = 4096 / (Math.PI * DRIVE_WHEEL_DIAMETER);
+
   // dead zone
   public static final double DEADZONE = 0.3; //why not
   public static final double TRIGGER_DEADZONE = 0.1;
@@ -54,15 +66,6 @@ public class RobotMap {
   // elevator motor port
   // TODO: put right motor ports
   public static final int ELEVATOR_MOTOR = 27;
-  public static final double ELEVATOR_F = .01;
-  public static final double ELEVATOR_P = .03;
-  public static final double ELEVATOR_I = .001;
-  public static final double ELEVATOR_D = 0.0; 
-  public static final int ELEVATOR_ALLOWABLE_ERROR = 20;
-  public static final double ELEVATOR_PEAK_OUTPUT = .7;
-  public static final double ELEVATOR_MIN_OUTPUT = 0;
-  public static final int ELEVATOR_UPDATE_TIME = 30;
-  public static final int ELEVATOR_PIDX = 0;
   public static final double DISTANCE_PER_PLUSE = ELEVEATOR_WHEEL_DIAMETER * Math.PI;
 
   // PID variables for elevator height
@@ -77,11 +80,12 @@ public class RobotMap {
   public static final double PHETA = 18.123;
 
   // PID variables for limelight drive distance
+  public static final double kFDrive = .03;
   public static final double kPDrive = 0.5;
   public static final double kIDrive = 0.001;
   public static final double kDDrive = 0.0;
-  public static final double DISTANCE_TOLERANCE = 5; // error of the pid
-  public static final double TARGET_DISTANCE = 50;
+  public static final double DISTANCE_TOLERANCE = 3 * DRIVER_TICKS_PER_INCH; // error of the pid
+  public static final double TARGET_DISTANCE = 150 * DRIVER_TICKS_PER_INCH;
 
   // PID variables for limelight turn angle
   public static final double KPTurn = 0.1;
@@ -110,6 +114,9 @@ public class RobotMap {
   // Autonomous turn speed
   public static final double AUTONOMOUS_TURN_FOR_TIME = .5;
   public static final double AUTONOMOUS_TURN_FOR_TIME_SPEED = .4;
+
+  // Autonomous turn angle
+  public static final double INITIAL_TURN_ANGLE = 180;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

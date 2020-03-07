@@ -23,7 +23,7 @@ public class Elevator extends SubsystemBase {
    */
   public Elevator() {
     // inverts the left elevator motor to go up
-    elevatorMotor.setInverted(true);
+    // elevatorMotor.setInverted(true);
 
   }
 

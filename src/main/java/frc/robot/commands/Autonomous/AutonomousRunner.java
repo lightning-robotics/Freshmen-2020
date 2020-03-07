@@ -24,7 +24,7 @@ public class AutonomousRunner extends SequentialCommandGroup {
   public AutonomousRunner(double driveSpeed, double driveTime, int turnTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(driveTime, driveSpeed), (Command) new TurnForTime(RobotMap.AUTONOMOUS_TURN_FOR_TIME, RobotMap.AUTONOMOUS_TURN_FOR_TIME_SPEED),
+    super((Command) new DriveForTime(driveTime, driveSpeed), (Command) new TurnForTime(RobotMap.INITIAL_TURN_ANGLE),
     (Command) new LimelightTurnToAngle().withTimeout(turnTime), (Command) new ShooterGoalOfTheDay());
   }
 }

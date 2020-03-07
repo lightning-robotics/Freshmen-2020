@@ -13,7 +13,6 @@ import frc.robot.Robot;
 
 public class ShooterSpeed extends CommandBase {
   private double topSpeed = -.5;
-  private double bottomSpeed = .5;
   private double speedChange = .05;
   /**
    * Creates a new ShooterSpeed.
@@ -33,15 +32,13 @@ public class ShooterSpeed extends CommandBase {
   public void execute() {
     if (Robot.oi.mechanism.getYButton()) topSpeed += speedChange; // increases top speed
     if (Robot.oi.mechanism.getAButton()) topSpeed -= speedChange; // decreases top speed
-    if (Robot.oi.mechanism.getBButton()) bottomSpeed -= speedChange; // increases bottom speed
-    if (Robot.oi.mechanism.getXButton()) bottomSpeed += speedChange; // decreases bottom speed
+
+    Robot.shooter.setBottomMotor(.3);
 
     // setting speed to the motors
     if (Robot.oi.mechanism.getBumper(Hand.kRight)) {
       System.out.println("Top speed" + topSpeed);
-      System.out.println("Bottom speed" + bottomSpeed);
       Robot.shooter.setTopMotor(topSpeed);
-      Robot.shooter.setBottomMotor(bottomSpeed);
     } else {
       initialize();
     }
