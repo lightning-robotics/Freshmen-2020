@@ -7,9 +7,9 @@
 
 package frc.robot.commands.Mechanisms;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class ElevatorPullSelfUp extends CommandBase {
   /**
@@ -29,29 +29,20 @@ public class ElevatorPullSelfUp extends CommandBase {
   @Override
   public void execute() {
 
-    Robot.elevator.setPower(.5);
-    Timer.delay(1.0/8);
-    upDown();
-    Timer.delay(1000000);
+    Robot.elevator.setMagic(RobotMap.ELEVATOR_TARGET_HEIGHT);    
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.elevator.setPower(0.05);
+    // Robot.elevator.setPower(0.05);
+    initialize();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  private void upDown() {
-    Robot.elevator.setPower(.2);
-    Timer.delay(.25);
-    Robot.elevator.setPower(-.15);
-    Timer.delay(.25);
   }
 }
