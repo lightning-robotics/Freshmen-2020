@@ -65,7 +65,7 @@ public class RobotMap {
 
   // elevator motor port
   // TODO: put right motor ports
-  public static final int ELEVATOR_MOTOR = 27;
+  public static final int ELEVATOR_MOTOR = 5;
   public static final double DISTANCE_PER_PLUSE = ELEVEATOR_WHEEL_DIAMETER * Math.PI;
 
   // PID variables for elevator height
@@ -95,11 +95,11 @@ public class RobotMap {
   public static final double TARGET_ANGLE = 0;
 
   // Intake motor ports
-  public static final int LEFT_INTAKE_MOTOR = 6;
-  public static final int RIGHT_INTAKE_MOTOR = 4;
+  public static final int LEFT_INTAKE_MOTOR = 1;
+  public static final int RIGHT_INTAKE_MOTOR = 14;
   
   // Intake motor speed
-  public static final double INTAKE_SPEED = .35;
+  public static final double INTAKE_SPEED = -.20;
 
   // Autonomous center
   public static final double AUTONOMOUS_CENTER_DRIVE_TIME = 1;
