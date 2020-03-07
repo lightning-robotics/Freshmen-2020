@@ -30,7 +30,7 @@ public class IntakeInOut extends CommandBase {
   @Override
   public void execute() {
     if (Robot.oi.driver.getBumper(Hand.kRight)) {
-      Robot.intake.setSpeed(RobotMap.INTAKE_SPEED);
+      Robot.intake.setSpeed(-RobotMap.INTAKE_SPEED);
       System.out.println("setting speed");
     }
     else if (Robot.oi.driver.getBumper(Hand.kLeft))

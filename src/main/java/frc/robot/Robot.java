@@ -31,6 +31,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Music;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
   public static final Elevator elevator = new Elevator();
   public static final Shooter shooter = new Shooter();
   public static final Intake intake = new Intake();
+  public static final Music music = new Music();
   
   Command spinner = new Spinner();
   Command tankDrive = new TankDrive();
@@ -127,6 +129,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    music.playVista();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -174,7 +177,7 @@ public class Robot extends TimedRobot {
     // TODO: uncomment
     // spinner.start();
     // shooterGoalOfTheDay.start();
-    elevatorUp.schedule();
+    // elevatorUp.schedule();
     // shooterSpeed.schedule();
     intakeInOut.schedule();
   }

@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,11 +21,20 @@ public class Music extends SubsystemBase {
    * Creates a new Music.
    */
   public Music() {
-    orca.addInstrument(instrument);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void playVista() {
+    orca.loadMusic("src\\main\\deploy\\vista.chrp");
+    orca.play();
+  }
+
+  public void addMotor(TalonFX motor) {
+    orca.addInstrument(motor);
+  }
+
 }
