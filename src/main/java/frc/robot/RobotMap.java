@@ -99,7 +99,8 @@ public class RobotMap {
   public static final int RIGHT_INTAKE_MOTOR = 14;
   
   // Intake motor speed
-  public static final double INTAKE_SPEED = -.20;
+  public static final double INTAKE_SPEED = .1;
+
 
   // Autonomous center
   public static final double AUTONOMOUS_CENTER_DRIVE_TIME = 1;
