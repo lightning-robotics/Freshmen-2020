@@ -69,7 +69,7 @@ public class RobotMap {
   public static final double DISTANCE_PER_PLUSE = ELEVEATOR_WHEEL_DIAMETER * Math.PI;
 
   // PID variables for elevator height
-  public static final double ELEVATOR_TARGET_HEIGHT = -10;
+  public static final double ELEVATOR_TARGET_HEIGHT = - .5 * 4096;
   public static final double kPElevator = 0.2;
   public static final double kIElevator = 0.0001;
   public static final double kDElevator = 0.0;
