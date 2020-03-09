@@ -7,21 +7,20 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotMap;
 
-public class Intake extends SubsystemBase {
-  private static TalonSRX leftMotor = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR);
-  private static TalonSRX rightMotor = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR);
+public class Music extends SubsystemBase {
+
+  Orchestra orca = new Orchestra();
+
   /**
-   * Creates a new Intake.
+   * Creates a new Music.
    */
-  public Intake() {
-    System.out.println("Created");
-    leftMotor.setInverted(true);
+  public Music() {
   }
 
   @Override
@@ -29,8 +28,13 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double speed) {
-    leftMotor.set(ControlMode.PercentOutput, speed);
-    rightMotor.set(ControlMode.PercentOutput, speed);
+  public void playVista() {
+    orca.loadMusic("src\\main\\deploy\\vista.chrp");
+    orca.play();
   }
+
+  public void addMotor(TalonFX motor) {
+    orca.addInstrument(motor);
+  }
+
 }

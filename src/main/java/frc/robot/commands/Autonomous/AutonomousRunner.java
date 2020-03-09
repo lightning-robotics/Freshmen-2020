@@ -9,7 +9,7 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.RobotMap;
 import frc.robot.commands.LimelightCommands.LimelightTurnToAngle;
 
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
@@ -17,13 +17,14 @@ import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoLeftOrRight extends SequentialCommandGroup {
+public class AutonomousRunner extends SequentialCommandGroup {
   /**
-   * Creates a new AutoLeftOrRight.
+   * Creates a new AutoCenter.
    */
-  public AutoLeftOrRight() {
+  public AutonomousRunner(double driveSpeed, double driveTime, int turnTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(1, .2), (Command) new LimelightTurnToAngle().withTimeout(3), (Command) new ShooterGoalOfTheDay());
+    super((Command) new DriveForTime(driveTime, driveSpeed), (Command) new TurnForTime(RobotMap.INITIAL_TURN_ANGLE),
+    (Command) new LimelightTurnToAngle().withTimeout(turnTime), (Command) new ShooterGoalOfTheDay());
   }
 }

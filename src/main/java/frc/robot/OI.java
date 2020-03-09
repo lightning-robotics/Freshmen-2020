@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Driving.TestCommand;
 import frc.robot.commands.LimelightCommands.LimelightDriveDistance;
 import frc.robot.commands.LimelightCommands.LimelightTurnToAngle;
 import frc.robot.commands.Mechanisms.ElevatorPullSelfUp;
@@ -29,12 +28,13 @@ public class OI {
 
     // turn to face target button
     JoystickButton turnButton = new JoystickButton(driver, Button.kA.value);
-    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(0.5));   //change!! testing only do like 3 or something
+    turnButton.whenPressed(new LimelightTurnToAngle().withTimeout(1));   //change!! testing only do like 3 or something
 
-    // pratice command to ensure that configuring buttons is working
-    JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
-    testButton.whenPressed(new TestCommand().withTimeout(3));
+    // // pratice command to ensure that configuring buttons is working
+    // JoystickButton testButton = new JoystickButton(driver, Button.kBumperRight.value);
+    // testButton.whenPressed(new TestCommand(3 * 4096).withTimeout(3));
 
+    // gets elevator to certain height
     JoystickButton elevatorButton = new JoystickButton(mechanism, Button.kY.value);
     elevatorButton.whenPressed(new ElevatorPullSelfUp());
     System.out.println("Buttons configured");
