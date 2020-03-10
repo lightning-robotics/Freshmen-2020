@@ -17,21 +17,36 @@ import frc.robot.RobotMap;
 public class Elevator extends SubsystemBase {
 
     // initializing the elevator motors
-    private TalonSRX elevatorMotor = new TalonSRX(RobotMap.ELEVATOR_MOTOR);
-  
-    // // initializing the encoders
-    // private Encoder encoderRight = new Encoder(RobotMap.ELEVATOR_RIGHT_ENCODER_A, RobotMap.ELEVATOR_RIGHT_ENCODER_B);
-    // private Encoder encoderLeft = new Encoder(RobotMap.ELEVATOR_LEFT_ENCODER_A, RobotMap.ELEVATOR_LEFT_ENCODER_B);
+    private static TalonSRX elevatorMotor = new TalonSRX(RobotMap.ELEVATOR_MOTOR);
 
-    // resetting the encoders at the start of the PID
-    private static boolean resetValue = true;
-
+  /**
+   * Creates a new Elevator.
+   */
   public Elevator() {
-    elevatorMotor.setInverted(true);
-    elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    // elevatorLeft.
-    // encoderLeft.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
-    // encoderRight.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
+    // inverts the left elevator motor to go up
+    // elevatorMotor.setInverted(true);
+
+    // configuring the feedback device
+    elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+
+		/* Set the peak and nominal outputs */
+		elevatorMotor.configNominalOutputForward(0);
+		elevatorMotor.configNominalOutputReverse(0);
+		elevatorMotor.configPeakOutputForward(1);
+    elevatorMotor.configPeakOutputReverse(-1);
+    
+    // configuring the PID
+    elevatorMotor.config_kF(0, .01);
+    elevatorMotor.config_kP(0, (.1 * 1023) / 600);
+    elevatorMotor.config_kI(0, .001);
+    elevatorMotor.config_kD(0, 1024 / 600);
+
+    // setting up the cruise velocity and acceleration
+    elevatorMotor.configMotionCruiseVelocity(3072);
+    elevatorMotor.configMotionAcceleration(3072);
+
+    // setting the initial poisiton
+    elevatorMotor.setSelectedSensorPosition(0);
   }
 
   @Override
@@ -48,21 +63,11 @@ public class Elevator extends SubsystemBase {
     elevatorMotor.set(ControlMode.PercentOutput, power);
   }
 
-  // public double getLeftDistance() {
-  //   return encoderLeft.getDistance();
-  // }
-  
-  // public double getRightDistance() {
-  //   return encoderRight.getDistance();
-  // }
-
-  // // ensure that we don't put too much power on a slow motor
-  // public double getCombinedDistance() {
-  //   if (resetValue) {
-  //     encoderLeft.reset();
-  //     encoderRight.reset();
-  //     resetValue = false;
-  //   }
-  //   return Math.min(getLeftDistance(), getRightDistance());
-  // }
+  public void setMagic(double target) {
+    // updating magic
+    // int ticks = elevatorMotor.getSensorCollection().getPulseWidthPosition();
+    // elevatorMotor.setSelectedSensorPosition(ticks);
+    // running the magic
+    elevatorMotor.set(ControlMode.MotionMagic, target);
+  }
 }
