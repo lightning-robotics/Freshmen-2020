@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 public class Elevator extends SubsystemBase {
 
     // initializing the elevator motors
-    private TalonSRX elevatorLeft = new TalonSRX(RobotMap.ELEVATOR_LEFT);
+    private TalonSRX elevatorMotor = new TalonSRX(RobotMap.ELEVATOR_MOTOR);
   
     // // initializing the encoders
     // private Encoder encoderRight = new Encoder(RobotMap.ELEVATOR_RIGHT_ENCODER_A, RobotMap.ELEVATOR_RIGHT_ENCODER_B);
@@ -27,8 +27,8 @@ public class Elevator extends SubsystemBase {
     private static boolean resetValue = true;
 
   public Elevator() {
-    elevatorLeft.setInverted(true);
-    elevatorLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    elevatorMotor.setInverted(true);
+    elevatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     // elevatorLeft.
     // encoderLeft.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
     // encoderRight.setDistancePerPulse(RobotMap.DISTANCE_PER_PLUSE);
@@ -45,8 +45,7 @@ public class Elevator extends SubsystemBase {
    * @param power the amount of power from [-1,1] to send to the motors
    */
   public void setPower(double power) {
-    elevatorLeft.set(ControlMode.PercentOutput, power);
-    elevatorRight.set(ControlMode.PercentOutput, power);
+    elevatorMotor.set(ControlMode.PercentOutput, power);
   }
 
   // public double getLeftDistance() {
