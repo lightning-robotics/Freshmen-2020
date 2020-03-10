@@ -16,10 +16,10 @@ package frc.robot;
 public class RobotMap {
   // Motor Port Number
   // TODO: put right motor numbers
-  public static final int FRONT_RIGHT_MOTOR = 20;
-  public static final int BACK_RIGHT_MOTOR = 21;
-  public static final int FRONT_LEFT_MOTOR = 22;
-  public static final int BACK_LEFT_MOTOR = 23;
+  public static final int FRONT_RIGHT_MOTOR = 7;
+  public static final int BACK_RIGHT_MOTOR = 8;
+  public static final int FRONT_LEFT_MOTOR = 4;
+  public static final int BACK_LEFT_MOTOR = 6;
 
   //  public static final int FRONT_RIGHT_MOTOR = 3;
   //  public static final int BACK_RIGHT_MOTOR = 2;
@@ -46,12 +46,12 @@ public class RobotMap {
 
   // spinner motor port
   // TODO: put right motor ports
-  public static final int SPINNER_MOTOR = 24;
+  public static final int SPINNER_MOTOR = 13;
 
   // shooter motor ports
   // TODO: put right motor ports
-  public static final int SHOOTER_TOP = 25;
-  public static final int SHOOTER_BOTTOM = 26;
+  public static final int SHOOTER_TOP = 30;
+  public static final int SHOOTER_BOTTOM = 3;
 
   // shooter distance per 4096 ticks
   public static final double SHOOTER_TICKS_PER_INCH = 4096 / (Math.PI * SHOOTER_WHEEL_DIAMETER);

@@ -34,8 +34,8 @@ public class ElevatorUp extends CommandBase {
   public void execute() {
 
     if (Robot.oi.mechanism.getPOV() == 90) power += .05;
-    if (Robot.oi.mechanism.getPOV() == 180) power -= .05;
-    if (Robot.oi.mechanism.getPOV() == 270) power = 0;
+    if (Robot.oi.mechanism.getPOV() == 270) power -= .05;
+    if (Robot.oi.mechanism.getPOV() == 180) power = 0;
 
     System.out.println(power);
 
