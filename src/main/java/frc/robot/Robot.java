@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -19,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Mechanisms.ElevatorUp;
 import frc.robot.commands.Mechanisms.IntakeInOut;
 import frc.robot.commands.Mechanisms.Spinner;
-
+import frc.robot.commands.Shooter.ShooterAndTrigger;
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
 import frc.robot.commands.Shooter.ShooterSpeed;
 
@@ -56,7 +57,8 @@ public class Robot extends TimedRobot {
   ElevatorUp elevatorUp = new ElevatorUp();
   IntakeInOut intakeInOut = new IntakeInOut();
   ShooterSpeed shooterSpeed = new ShooterSpeed();
-  ShooterGoalOfTheDay shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  // ShooterGoalOfTheDay shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  ShooterAndTrigger shooterAndTrigger = new ShooterAndTrigger();
   
   SequentialCommandGroup m_autonomousCommand;
   SendableChooser<SequentialCommandGroup> m_chooser = new SendableChooser<>();
@@ -176,10 +178,14 @@ public class Robot extends TimedRobot {
 
     // TODO: uncomment
     // spinner.start();
-    // shooterGoalOfTheDay.start();
     elevatorUp.schedule();
     // shooterSpeed.schedule();
-    intakeInOut.schedule();
+    // intakeInOut.schedule();
+
+    // if (oi.mechanism.getBumper(Hand.kRight)) {
+    //   shooterAndTrigger.execute();
+    // }
+    
   }
 
   /**

@@ -20,11 +20,11 @@ public class ShooterSpeed extends CommandBase {
   private double topSpeed = -.5;
   private final double speedChange = .05;
 
-  UsbCamera USBCamera = new UsbCamera("theCamera", 0);
-  MjpegServer mjpegServer = new MjpegServer("theServer", 5801);
-  CvSource outputStream = new CvSource("name", PixelFormat.kMJPEG, 640, 480, 30);
-  MjpegServer mjpegServer2 = new MjpegServer("mjpegServer2", 5801);
-  CvSink cvSink = new CvSink("opencv_USB Camera 0");
+  // UsbCamera USBCamera = new UsbCamera("theCamera", 0);
+  // MjpegServer mjpegServer = new MjpegServer("theServer", 5801);
+  // CvSource outputStream = new CvSource("name", PixelFormat.kMJPEG, 640, 480, 30);
+  // MjpegServer mjpegServer2 = new MjpegServer("mjpegServer2", 5801);
+  // CvSink cvSink = new CvSink("opencv_USB Camera 0");
 
 
     /**
@@ -32,9 +32,9 @@ public class ShooterSpeed extends CommandBase {
    */
   public ShooterSpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
-    mjpegServer.setSource(USBCamera);
-    cvSink.setSource(USBCamera);
-    mjpegServer2.setSource(outputStream);
+    // mjpegServer.setSource(USBCamera);
+    // cvSink.setSource(USBCamera);
+    // mjpegServer2.setSource(outputStream);
   }
 
   // Called when the command is initially scheduled.

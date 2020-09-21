@@ -16,6 +16,8 @@ import frc.robot.RobotMap;
 public class Intake extends SubsystemBase {
   private static TalonSRX leftMotor = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR);
   private static TalonSRX rightMotor = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR);
+  private static TalonSRX holderMotor = new TalonSRX(RobotMap.HOLDER_MOTOR);
+  private static TalonSRX triggerMotor = new TalonSRX(RobotMap.TRIGGER_MOTOR);
   /**
    * Creates a new Intake.
    */
@@ -32,5 +34,13 @@ public class Intake extends SubsystemBase {
   public void setSpeed(double speed) {
     leftMotor.set(ControlMode.PercentOutput, speed);
     rightMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setHolderSpeed(double speed) {
+    holderMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setTriggerSpeed(double speed) {
+    triggerMotor.set(ControlMode.PercentOutput, speed);
   }
 }

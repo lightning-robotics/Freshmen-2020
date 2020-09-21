@@ -7,6 +7,7 @@
 
 package frc.robot.commands.Mechanisms;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
@@ -33,14 +34,21 @@ public class ElevatorUp extends CommandBase {
   @Override
   public void execute() {
 
-    if (Robot.oi.mechanism.getPOV() == 90) power += .05;
-    if (Robot.oi.mechanism.getPOV() == 270) power -= .05;
-    if (Robot.oi.mechanism.getPOV() == 180) power = 0;
+    // if (Robot.oi.mechanism.getPOV() == 90) power += .05;
+    // if (Robot.oi.mechanism.getPOV() == 270) power -= .05;
+    // if (Robot.oi.mechanism.getPOV() == 180) power = 0;
 
     System.out.println(power);
 
-    power = Math.min(1, power);
-    power = Math.max(0, power);
+    power = Robot.oi.mechanism.getTriggerAxis(Hand.kRight);
+    // power = Math.min(.2, Math.abs(power)) * (power / Math.abs(power));
+
+    if (power == 0) {
+      power = -Robot.oi.mechanism.getTriggerAxis(Hand.kLeft);
+      // power = Math.max(.5, Math.abs(power)) * (power / Math.abs(power));
+    }
+
+    power = Math.min(.5, Math.abs(power)) * (power / Math.abs(power));
 
     Robot.elevator.setPower(power);
 

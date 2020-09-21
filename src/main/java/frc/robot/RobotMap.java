@@ -98,6 +98,18 @@ public class RobotMap {
   public static final int LEFT_INTAKE_MOTOR = 1;
   public static final int RIGHT_INTAKE_MOTOR = 14;
   
+  // Holder motor ports
+  public static final int HOLDER_MOTOR = 50;
+
+  // holder speed
+  public static final double HOLDER_SPEED = .2;
+
+  // Trigger motor ports
+  public static final int TRIGGER_MOTOR = 9;
+
+  // Trigger speed
+  public static final double TRIGGER_SPEED = .2;
+  
   // Intake motor speed
   public static final double INTAKE_SPEED = .1;
 
