@@ -5,38 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.LimelightCommands;
+package frc.robot.commands.Music;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class LimelightDriveDistance extends CommandBase {
+public class MusicPlayer extends CommandBase {
   /**
-   * Creates a new LimelightDriveDistance.
+   * Creates a new MusicPlayer.
    */
-  public LimelightDriveDistance() {
+  public MusicPlayer() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    Robot.driveTrain.setPID(RobotMap.kFDrive, RobotMap.kPDrive, RobotMap.kIDrive, RobotMap.kDDrive);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double distanceInTicks = Robot.limelight.distanceInTicks(RobotMap.DRIVER_TICKS_PER_INCH);
-
-    Robot.driveTrain.runPID(distanceInTicks);
-
-    isFinished();
-
   }
 
   // Called once the command ends or is interrupted.
@@ -47,6 +35,6 @@ public class LimelightDriveDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.driveTrain.finishedPID();
+    return false;
   }
 }

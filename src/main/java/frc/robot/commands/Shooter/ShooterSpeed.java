@@ -7,19 +7,34 @@
 
 package frc.robot.commands.Shooter;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class ShooterSpeed extends CommandBase {
   private double topSpeed = -.5;
-  private double bottomSpeed = .5;
-  private double speedChange = .05;
-  /**
+  private final double speedChange = .05;
+
+  // UsbCamera USBCamera = new UsbCamera("theCamera", 0);
+  // MjpegServer mjpegServer = new MjpegServer("theServer", 5801);
+  // CvSource outputStream = new CvSource("name", PixelFormat.kMJPEG, 640, 480, 30);
+  // MjpegServer mjpegServer2 = new MjpegServer("mjpegServer2", 5801);
+  // CvSink cvSink = new CvSink("opencv_USB Camera 0");
+
+
+    /**
    * Creates a new ShooterSpeed.
    */
   public ShooterSpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
+    // mjpegServer.setSource(USBCamera);
+    // cvSink.setSource(USBCamera);
+    // mjpegServer2.setSource(outputStream);
   }
 
   // Called when the command is initially scheduled.
@@ -33,15 +48,13 @@ public class ShooterSpeed extends CommandBase {
   public void execute() {
     if (Robot.oi.mechanism.getYButton()) topSpeed += speedChange; // increases top speed
     if (Robot.oi.mechanism.getAButton()) topSpeed -= speedChange; // decreases top speed
-    if (Robot.oi.mechanism.getBButton()) bottomSpeed -= speedChange; // increases bottom speed
-    if (Robot.oi.mechanism.getXButton()) bottomSpeed += speedChange; // decreases bottom speed
+
+    Robot.shooter.setBottomMotor(.3);
 
     // setting speed to the motors
     if (Robot.oi.mechanism.getBumper(Hand.kRight)) {
       System.out.println("Top speed" + topSpeed);
-      System.out.println("Bottom speed" + bottomSpeed);
       Robot.shooter.setTopMotor(topSpeed);
-      Robot.shooter.setBottomMotor(bottomSpeed);
     } else {
       initialize();
     }
@@ -49,7 +62,7 @@ public class ShooterSpeed extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     initialize();
   }
 

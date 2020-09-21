@@ -5,48 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.LimelightCommands;
+package frc.robot.commands.Mechanisms;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class LimelightDriveDistance extends CommandBase {
+public class IntakeInOut extends CommandBase {
   /**
-   * Creates a new LimelightDriveDistance.
+   * Creates a new IntakeInOut.
    */
-  public LimelightDriveDistance() {
+  public IntakeInOut() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    Robot.driveTrain.setPID(RobotMap.kFDrive, RobotMap.kPDrive, RobotMap.kIDrive, RobotMap.kDDrive);
-
+    Robot.intake.setSpeed(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double distanceInTicks = Robot.limelight.distanceInTicks(RobotMap.DRIVER_TICKS_PER_INCH);
-
-    Robot.driveTrain.runPID(distanceInTicks);
-
-    isFinished();
-
+    if (Robot.oi.driver.getBumper(Hand.kRight)) {
+      Robot.intake.setSpeed(-RobotMap.INTAKE_SPEED);
+      Robot.intake.setHolderSpeed(-RobotMap.HOLDER_SPEED);
+      System.out.println("setting speed");
+    }
+    else if (Robot.oi.driver.getBumper(Hand.kLeft)) {
+      Robot.intake.setSpeed(RobotMap.INTAKE_SPEED);
+      Robot.intake.setHolderSpeed(RobotMap.HOLDER_SPEED);
+    }
+    else
+    Robot.intake.setSpeed(0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    initialize();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.driveTrain.finishedPID();
+    return false;
   }
 }

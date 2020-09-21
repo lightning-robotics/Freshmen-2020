@@ -8,18 +8,37 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
-  private TalonSRX shooter1 = new TalonSRX(RobotMap.SHOOTER_TOP); //top
-  private TalonSRX shooter2 = new TalonSRX(RobotMap.SHOOTER_BOTTOM);
+  private static TalonSRX shooter1 = new TalonSRX(RobotMap.SHOOTER_TOP); //top
+  private static TalonSRX shooter2 = new TalonSRX(RobotMap.SHOOTER_BOTTOM);
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
+
+    shooter1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+
+    shooter1.config_kP(0, .07); // 0,07 for comp
+		shooter1.config_kI(0, .0002); // 0.001 for comp
+		shooter1.config_kD(10, 0); // 1.5		
+	
+		// Max RPM is 4,800, max change in native units per 100ms is 13,140
+		// 1023 / 13,140 = 0.078
+		//RobotMap.flywheel.setF(0.078);
+		shooter1.config_kF(0, 0.0235); // 0.03122 0.015 COMP BOT
+				
+    shooter1.configNominalOutputForward(+0f);
+    shooter1.configNominalOutputReverse(-0f);
+    shooter1.configPeakOutputReverse(+1f); // Only drive forward
+    shooter1.configPeakOutputForward(+1f); 
+		shooter1.set(ControlMode.PercentOutput, 0);
+		shooter1.setInverted(false);
 
   }
 
@@ -29,7 +48,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setTopMotor(double speed) {
-    shooter1.set(ControlMode.PercentOutput, speed);
+
+    shooter1.set(ControlMode.Velocity, speed);
+
   }
 
   public void setBottomMotor(double speed) {
@@ -38,19 +59,17 @@ public class Shooter extends SubsystemBase {
 
   public void shootDistance(double distance) {
     double tSpeed = topSpeedDistance(distance);
-    double bSpeed = bottomSpeedDistance(distance);
     setTopMotor(tSpeed);
-    setBottomMotor(bSpeed);
   }
 
+  /**
+   * 
+   * @param distance Distance in ticks
+   * @return speed of top motor
+   */
   private double topSpeedDistance(double distance) {
     // TODO: Find this equation
     return 5 * Math.pow(distance, 2) + 4 * distance;
-  }
-
-  private double bottomSpeedDistance(double distance) {
-    // TODO: Find this equation
-    return -3 * Math.pow(distance, 3) + 10 * distance;
   }
 
   public void stopShooter() {

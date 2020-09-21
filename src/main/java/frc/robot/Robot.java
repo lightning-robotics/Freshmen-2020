@@ -8,22 +8,31 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import frc.robot.commands.Mechanisms.ElevatorUp;
+import frc.robot.commands.Mechanisms.IntakeInOut;
 import frc.robot.commands.Mechanisms.Spinner;
+import frc.robot.commands.Shooter.ShooterAndTrigger;
 import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
 import frc.robot.commands.Shooter.ShooterSpeed;
-import frc.robot.commands.Autonomous.AutoCenter;
-import frc.robot.commands.Autonomous.AutoLeftOrRight;
+
+import frc.robot.commands.Autonomous.AutonomousRunner;
+
 import frc.robot.commands.Driving.TankDrive;
+
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Music;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -40,15 +49,19 @@ public class Robot extends TimedRobot {
   public static final Limelight limelight = new Limelight();
   public static final Elevator elevator = new Elevator();
   public static final Shooter shooter = new Shooter();
-
-  Command tankDrive = new TankDrive();
-  Command shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  public static final Intake intake = new Intake();
+  public static final Music music = new Music();
+  
   Command spinner = new Spinner();
+  Command tankDrive = new TankDrive();
   ElevatorUp elevatorUp = new ElevatorUp();
+  IntakeInOut intakeInOut = new IntakeInOut();
   ShooterSpeed shooterSpeed = new ShooterSpeed();
+  // ShooterGoalOfTheDay shooterGoalOfTheDay = new ShooterGoalOfTheDay();
+  ShooterAndTrigger shooterAndTrigger = new ShooterAndTrigger();
+  
   SequentialCommandGroup m_autonomousCommand;
   SendableChooser<SequentialCommandGroup> m_chooser = new SendableChooser<>();
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -57,15 +70,19 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
 
-    m_chooser.addOption("center", new AutoCenter());
-    m_chooser.addOption("left or right", new AutoLeftOrRight());
+    m_chooser.addOption("center", new AutonomousRunner(
+      RobotMap.AUTONOMOUS_CENTER_DRIVE_SPEED, 
+      RobotMap.AUTONOMOUS_CENTER_DRIVE_TIME, 
+      RobotMap.AUTONOMOUS_CENTER_TURN_TIME
+    ));
+    m_chooser.addOption("left or right", new AutonomousRunner(
+      RobotMap.AUTONOMOUS_POSITION_DRIVE_SPEED,
+      RobotMap.AUTONOMOUS_POSITION_DRIVE_TIME,
+      RobotMap.AUTONOMOUS_CENTER_TURN_TIME
+    ));
     
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-
-    // set the back motors to follow the front
-    DriveTrain.backLeftMotor.follow(DriveTrain.frontLeftMotor);
-    DriveTrain.backRightMotor.follow(DriveTrain.frontRightMotor);
   }
 
   /**
@@ -88,10 +105,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    tankDrive.cancel();
-    spinner.cancel();
+    // tankDrive.cancel();
+    // spinner.cancel();
     // shooterGoalOfTheDay.cancel();
-    shooterSpeed.cancel();
+    // shooterSpeed.cancel();
+    intakeInOut.cancel();
   }
 
   @Override
@@ -113,6 +131,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    music.playVista();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -146,7 +165,8 @@ public class Robot extends TimedRobot {
     }
     
     // starting the drive function
-    tankDrive.start();
+    // TODO: uncomment
+    // tankDrive.start();
   }
 
   /**
@@ -156,12 +176,16 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    spinner.start();
-    // shooterGoalOfTheDay.start();
+    // TODO: uncomment
+    // spinner.start();
     elevatorUp.schedule();
-    shooterSpeed.schedule();
+    // shooterSpeed.schedule();
+    // intakeInOut.schedule();
 
-    // TODO: Intake
+    // if (oi.mechanism.getBumper(Hand.kRight)) {
+    //   shooterAndTrigger.execute();
+    // }
+    
   }
 
   /**

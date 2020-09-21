@@ -5,25 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.commands.LimelightCommands.LimelightTurnToAngle;
-
-import frc.robot.commands.Shooter.ShooterGoalOfTheDay;
-
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoLeftOrRight extends SequentialCommandGroup {
+public class ShooterAndTrigger extends SequentialCommandGroup {
   /**
-   * Creates a new AutoLeftOrRight.
+   * Creates a new ShooterAndTrigger.
    */
-  public AutoLeftOrRight() {
+  public ShooterAndTrigger() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super((Command) new DriveForTime(1, .2), (Command) new LimelightTurnToAngle(), (Command) new ShooterGoalOfTheDay());
+    super((Command) new HolderAndTrigger(.5), (Command) new ShooterGoalOfTheDay());
   }
 }

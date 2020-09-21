@@ -7,12 +7,14 @@
 
 package frc.robot.commands.Mechanisms;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
 public class ElevatorUp extends CommandBase {
   
+  private double power = 0;
+
   /**
    * Creates a new Elevator.
    */
@@ -32,13 +34,31 @@ public class ElevatorUp extends CommandBase {
   @Override
   public void execute() {
 
-    double axis = Robot.oi.getControllerAxis(Robot.oi.mechanism, RobotMap.ROBOT_DRIVE_YAXIS);
+    // if (Robot.oi.mechanism.getPOV() == 90) power += .05;
+    // if (Robot.oi.mechanism.getPOV() == 270) power -= .05;
+    // if (Robot.oi.mechanism.getPOV() == 180) power = 0;
 
-    axis = Math.min(Math.abs(axis), .5);
+    System.out.println(power);
 
-    if (Math.abs(axis) > RobotMap.DEADZONE) {
-      Robot.elevator.setPower(axis);
+    power = Robot.oi.mechanism.getTriggerAxis(Hand.kRight);
+    // power = Math.min(.2, Math.abs(power)) * (power / Math.abs(power));
+
+    if (power == 0) {
+      power = -Robot.oi.mechanism.getTriggerAxis(Hand.kLeft);
+      // power = Math.max(.5, Math.abs(power)) * (power / Math.abs(power));
     }
+
+    power = Math.min(.5, Math.abs(power)) * (power / Math.abs(power));
+
+    Robot.elevator.setPower(power);
+
+    // double axis = Robot.oi.getControllerAxis(Robot.oi.mechanism, RobotMap.ROBOT_DRIVE_YAXIS);
+
+    // axis = Math.min(Math.abs(axis), .5);
+
+    // if (Math.abs(axis) > RobotMap.DEADZONE) {
+    //   Robot.elevator.setPower(axis);
+    // }
 
   }
 

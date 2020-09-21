@@ -11,26 +11,34 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class TestCommand extends CommandBase {
+  // this is how far we want the robot to drive
+  // in this test, I want it to drive three full rotations
+  private double distance;
   /**
    * Creates a new TestCommand.
    */
-  public TestCommand() {
+  public TestCommand(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.distance = distance;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.driveTrain.FRMset(0);
-    Robot.driveTrain.FLMset(0);
+    Robot.driveTrain.driveAll(0);
+    Robot.driveTrain.setPID(
+      .01, 
+      .02, 
+      .001, 
+      0.0
+      );
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Running the command");
-    Robot.driveTrain.FRMset(-.3);
-    Robot.driveTrain.FLMset(-.3);
+    Robot.driveTrain.runPID(-distance);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +50,6 @@ public class TestCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Robot.driveTrain.finishedPID();
   }
 }

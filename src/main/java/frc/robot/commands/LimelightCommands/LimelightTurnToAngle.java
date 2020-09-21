@@ -8,46 +8,53 @@
 package frc.robot.commands.LimelightCommands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class LimelightTurnToAngle extends PIDCommand {
+public class LimelightTurnToAngle extends CommandBase {
+  double initialTurnAgle;
+
+  PIDController turning;
   /**
    * Creates a new LimelightTurnToAngle.
    */
   public LimelightTurnToAngle() {
-    super(
-        // The controller that the command will use
-        new PIDController(RobotMap.KPTurn, RobotMap.KITurn, RobotMap.KDTurn),
-        // This should return the measurement
-        Robot.limelight::getXAngle,
-        // This should return the setpoint (can also be a constant)
-        RobotMap.TARGET_ANGLE,
-        // This uses the output
-        output -> {
-          // Use the output here
-          if (Robot.limelight.getXAngle() != 0) {
-            Robot.driveTrain.FRMset(-output);
-            Robot.driveTrain.FLMset(output);
-          } else {
-            Robot.driveTrain.FRMset(0);
-            Robot.driveTrain.FLMset(0);
-          }
-        });
     // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(RobotMap.TURN_TOLERANCE);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    Robot.limelight.navx.zeroYaw();
+    Robot.driveTrain.driveAll(0);
+    turning.setPID(RobotMap.KPTurn, RobotMap.KITurn, RobotMap.KDTurn);
+    turning.setSetpoint(Robot.limelight.getXAngle());
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+
+    double output = turning.calculate(Robot.limelight.navx.getAngle());
+
+    Robot.driveTrain.setRightMotorSpeed(output);
+    Robot.driveTrain.setLeftMotorSpeed(-output);
+
+    isFinished();
+    
+
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    Robot.driveTrain.driveAll(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return turning.atSetpoint();
   }
 }

@@ -7,10 +7,14 @@
 
 package frc.robot.subsystems;
 
+// import com.kauailabs.*;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.RobotMap;
 
 public class Limelight extends SubsystemBase {
@@ -18,13 +22,13 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry tx = table.getEntry("tx");
   private NetworkTableEntry ty = table.getEntry("ty");
   private NetworkTableEntry tv = table.getEntry("tv");
-
+  public final AHRS navx;
 
   /**
    * Creates a new Limelight.
    */
   public Limelight() {
-
+    navx = new AHRS(SerialPort.Port.kMXP);
   }
 
   @Override
@@ -56,5 +60,10 @@ public class Limelight extends SubsystemBase {
 
     System.out.println("Returning distance");
     return (RobotMap.HEIGHT_2 - RobotMap.HEIGHT_1) / Math.tan(radiansA1 + radiansA2);
+  }
+
+  public double distanceInTicks(double ticksPerInch) {
+    double distanceInInches = getDistanceFrom();
+    return distanceInInches * ticksPerInch;
   }
 }
